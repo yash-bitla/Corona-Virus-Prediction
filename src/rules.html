@@ -1,0 +1,3195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>COVID19 Global Forecasting (Week 3) | Kaggle</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="Forecast daily COVID-19 spread in regions around world"
+    />
+    <meta name="turbolinks-cache-control" content="no-cache" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
+    />
+    <meta name="theme-color" content="#008ABC" />
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/javascript">
+      window["initialPageLoadStartTime"] = new Date().getTime();
+    </script>
+    <link
+      rel="preconnect"
+      href="https://www.google-analytics.com"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://stats.g.doubleclick.net" />
+    <link rel="preconnect" href="https://js.intercomcdn.com" />
+    <link rel="preconnect" href="https://storage.googleapis.com" />
+    <link rel="preconnect" href="https://apis.google.com" />
+    <link
+      rel="preload"
+      href="/static/assets/fontawesome-webfont.woff2"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      href="/static/images/favicon.ico"
+      rel="shortcut icon"
+      type="image/x-icon"
+    />
+    <link
+      rel="manifest"
+      href="/static/json/manifest.json"
+      crossorigin="use-credentials"
+    />
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Google+Material+Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/assets/vendor.css?v=b7f5a8db8b6d917abb5f"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/assets/app.css?v=1e2a27a6c9619e2545d6"
+    />
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      try {
+        (function (a, s, y, n, c, h, i, d, e) {
+          d = s.createElement("style");
+          d.appendChild(s.createTextNode(""));
+          s.head.appendChild(d);
+          d = d.sheet;
+          y = y.map((x) => d.insertRule(x + "{ opacity: 0 !important }"));
+          h.start = 1 * new Date();
+          h.end = i = function () {
+            y.forEach((x) => (x < d.cssRules.length ? d.deleteRule(x) : {}));
+          };
+          (a[n] = a[n] || []).hide = h;
+          setTimeout(function () {
+            i();
+            h.end = null;
+          }, c);
+          h.timeout = c;
+        })(window, document, [".site-header-react__nav"], "dataLayer", 2000, {
+          "GTM-52LNT9S": true,
+        });
+      } catch (ex) {}
+    </script>
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-12629138-1", {
+        optimize_id: "GTM-52LNT9S",
+        displayFeaturesTask: null,
+        send_page_view: false,
+      });
+    </script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-12629138-1"
+    ></script>
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      window.intercomSettings = {
+        app_id: "koj6gxx6",
+        name: "taaha kazi",
+        email: "taahakazi@gmail.com",
+        user_hash:
+          "8f39b667be74744a5623096bd1e0f2f9efd872423314036f6e79dbdb17b4973f",
+        created_at: 1586585507,
+        last_visit_date_at: 1586602394,
+        status_id: 2,
+        performance_tier: 0,
+        user_name: "taahakazi",
+        display_name: "taaha kazi",
+        is_admin: false,
+        experiment_group: 1,
+        newsletter_subscriber: true,
+        competition_mailing_list_subscriber: true,
+        block_emails: false,
+        competitions_tier: 0,
+        competitions_tier_attained_at: 1586587656,
+        kernels_tier: 0,
+        kernels_tier_attained_at: 1586587656,
+        discussion_tier: 0,
+        discussion_tier_attained_at: 1586587656,
+        datasets_count: 0,
+        host_page_visits: 0,
+        in_class_competitions_hosted_count: 0,
+        last_hour_searches_count: 0,
+        api_has_token: false,
+        api_has_requests: false,
+      };
+    </script>
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      (function () {
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+          ic("reattach_activator");
+          ic("update", intercomSettings);
+        } else {
+          var d = document;
+          var i = function () {
+            i.c(arguments);
+          };
+          i.q = [];
+          i.c = function (args) {
+            i.q.push(args);
+          };
+          w.Intercom = i;
+          function l() {
+            var s = d.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://widget.intercom.io/widget/koj6gxx6";
+            var x = d.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(s, x);
+          }
+          if (w.attachEvent) {
+            w.attachEvent("onload", l);
+          } else {
+            w.addEventListener("load", l, false);
+          }
+        }
+      })();
+    </script>
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@kaggle" />
+    <meta name="twitter:creator" content="@kaggle" />
+    <meta
+      name="og:url"
+      content="https://kaggle.com/c/covid19-global-forecasting-week-3"
+    />
+    <meta name="og:title" content="COVID19 Global Forecasting (Week 3)" />
+    <meta
+      name="og:description"
+      content="Forecast daily COVID-19 spread in regions around world"
+    />
+    <meta
+      name="og:image"
+      content="https://storage.googleapis.com/kaggle-competitions/kaggle/19853/logos/thumb76_76.png?t=2020-04-01-21-46-04"
+    />
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/javascript">
+      var Kaggle = Kaggle || {};
+
+      Kaggle.Current = {
+        userId: 4856027,
+        userProfileUrl: "/taahakazi",
+        userDisplayNameEscaped: "taaha kazi",
+        userThumbnailUrl:
+          "https://storage.googleapis.com/kaggle-avatars/thumbnails/default-thumb.png",
+        userEmail: "taahakazi@gmail.com",
+        userIsPhoneVerified: false,
+        userName: "taahakazi",
+        tier: "Novice",
+        antiForgeryToken:
+          "CfDJ8LdUzqlsSWBPr4Ce3rb9VL-RtexLumVveFazaPEFxSaKAbQTPAGx3iF9co6eqrJ1CkCZwftmiCoXAurFdLaZdyv-GGqTnGM2qUy6QD3TkoFDx7MzMzS926W5BOqewbs9TeYchdhyW_VKCp8CI8umKZmNAewrg2zHrdK662A2HJTl-fZ7dx_MgSVq17tlLV7cdw",
+        isAnonymous: false,
+        analyticsToken:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODY2MDM4MjQsIlVzZXJJZCI6NDg1NjAyN30.9Y93cTs5xtBP11E0c_T0gRWYu0KFS32pHZRtThvDhjQ",
+        analyticsTokenExpiry: 15,
+        internetKernelsEnabled: false,
+
+        mdeImageUploader: true,
+      };
+      Kaggle.Current.log = function () {};
+      Kaggle.Current.warn = function () {};
+
+      var decodeUserDisplayName = function () {
+        var escapedUserDisplayName =
+          Kaggle.Current.userDisplayNameEscaped || "";
+        try {
+          var textVersion = new DOMParser().parseFromString(
+            escapedUserDisplayName,
+            "text/html"
+          ).documentElement.textContent;
+          if (textVersion) {
+            return textVersion;
+          }
+        } catch (ex) {}
+        return escapedUserDisplayName;
+      };
+      Kaggle.Current.userDisplayName = decodeUserDisplayName();
+    </script>
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/javascript">
+      var Kaggle = Kaggle || {};
+      Kaggle.PageMessages = [
+        {
+          id: null,
+          type: "info",
+          message: null,
+          dangerousHtmlMessage:
+            "You must accept this competition\u0027s rules before you can continue",
+          isPersistent: true,
+          faIcon: null,
+        },
+      ];
+    </script>
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/javascript">
+      /* <![CDATA[ */
+      goog_snippet_vars = function () {
+        var w = window;
+        w.google_conversion_id = 955616553;
+        w.google_conversion_label = "QSjvCKDksHMQqZrWxwM";
+        w.google_conversion_value = 0.0;
+        w.google_conversion_currency = "USD";
+        w.google_remarketing_only = false;
+        w.google_conversion_language = "en";
+        w.google_conversion_format = "3";
+        w.google_conversion_color = "ffffff";
+      };
+      // DO NOT CHANGE THE CODE BELOW.
+      goog_report_conversion = function (url) {
+        goog_snippet_vars();
+        window.google_conversion_format = "3";
+        var opt = new Object();
+        opt.onload_callback = function () {
+          if (typeof url != "undefined") {
+            window.location = url;
+          }
+        };
+        var conv_handler = window["google_trackConversion"];
+        if (typeof conv_handler == "function") {
+          conv_handler(opt);
+        }
+      };
+      /* ]]> */
+    </script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      type="text/javascript"
+      src="//www.googleadservices.com/pagead/conversion_async.js"
+    ></script>
+
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      window["useKaggleAnalytics"] = true;
+    </script>
+
+    <script
+      id="gapi-target"
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      src="https://apis.google.com/js/api.js"
+      defer
+      async
+    ></script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      src="/static/assets/runtime.js?v=87ac734390336bc874d4"
+      data-turbolinks-track="reload"
+    ></script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      src="/static/assets/vendor.js?v=2812fb9bcd420be36d17"
+      data-turbolinks-track="reload"
+    ></script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      src="/static/assets/app.js?v=743752d9aa45d8474197"
+      data-turbolinks-track="reload"
+    ></script>
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==">
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/service-worker.js");
+        });
+      }
+    </script>
+    <script
+      nonce="kggibyII/Z4tDY0TuQyBvg=="
+      defer
+      src="https://cdn.jsdelivr.net/npm/stackdriver-errors-js@0.7.0/dist/stackdriver-errors-concat.min.js"
+    ></script>
+    <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/javascript">
+      function shouldFilterStackdriverError(message) {
+        if (
+          message &&
+          /\[ResponseMiddlewares.enforceOk\] response was not ok \| (429|404)/.test(
+            message
+          )
+        ) {
+          return true;
+        }
+        if (
+          !window.navigator ||
+          !window.navigator.userAgent ||
+          window.navigator.userAgent.toLowerCase().indexOf("bot") > -1
+        ) {
+          return true;
+        }
+        return false;
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        var errorHandler = new StackdriverErrorReporter();
+        errorHandler.start({
+          key: "AIzaSyDANGXFHtSIVc51MIdGwg4mQFgm3oNrKoo",
+          projectId: "kaggle-161607",
+          service: "web-fe",
+          version: "cfa7485aad58e6dba06fb512811ef4bf586a25c0",
+          context: {
+            user: "4856027",
+          },
+        });
+        let sdErrorHandler = window.onerror;
+        window.onerror = function (message, source, lineno, colno, error) {
+          if (error && shouldFilterStackdriverError(error.message)) {
+            return true;
+          }
+          return sdErrorHandler(message, source, lineno, colno, error);
+        };
+        let sdUnhandledRejectionHandler = window.onunhandledrejection;
+        window.onunhandledrejection = function (e) {
+          e.preventDefault();
+          if (shouldFilterStackdriverError(e.reason)) {
+            return true;
+          }
+          return sdUnhandledRejectionHandler(e);
+        };
+      });
+    </script>
+  </head>
+  <body data-turbolinks="false">
+    <main>
+      <div id="site-container"></div>
+      <div
+        data-component-name="NavigationContainer"
+        style="display: flex; flex-direction: column; flex: 1 0 auto"
+      ></div>
+      <script class="kaggle-component" nonce="kggibyII/Z4tDY0TuQyBvg==">
+        var Kaggle = window.Kaggle || {};
+        Kaggle.State = Kaggle.State || [];
+        Kaggle.State.push({ isTopNavigation: false });
+        performance &&
+          performance.mark &&
+          performance.mark("NavigationContainer.componentCouldBootstrap");
+      </script>
+      <div id="site-body" class="hide">
+        <div
+          data-component-name="CompetitionContainer"
+          style="display: flex; flex-direction: column; flex: 1 0 auto"
+        ></div>
+        <script class="kaggle-component" nonce="kggibyII/Z4tDY0TuQyBvg==">
+          var Kaggle = window.Kaggle || {};
+          Kaggle.State = Kaggle.State || [];
+          Kaggle.State.push({
+            competitionId: 19853,
+            competitionType: "prediction",
+            competitionTitle: "COVID19 Global Forecasting (Week 3)",
+            briefDescription:
+              "Forecast daily COVID-19 spread in regions around world",
+            competitionHeaderImageUrl:
+              "https://storage.googleapis.com/kaggle-competitions/kaggle/19853/logos/header.png?t=2020-04-01-21-45-38",
+            organizationId: 4,
+            organizationName: "Kaggle",
+            organizationSlug: "kaggle",
+            organizationThumbnailUrl:
+              "https://storage.googleapis.com/kaggle-organizations/4/thumbnail.png",
+            hasAcceptedRules: false,
+            pageMessages: [],
+            dateEnabled: "2020-04-02T19:02:18.693Z",
+            deadline: "2020-04-08T23:59:00Z",
+            mergerDeadline: "2020-04-08T23:59:00Z",
+            newEntrantDeadline: null,
+            rewardQuantity: null,
+            rewardTypeName: "Knowledge",
+            totalTeams: 452,
+            isTeamCountOverridden: false,
+            isInClass: false,
+            hostSegment: "research",
+            canEdit: false,
+            canEditMetadata: false,
+            overview: {
+              id: 91079,
+              postId: 6458489,
+              content:
+                "**[This week 3 forecasting task is now closed for submissions. Click here to visit the week 4 version, and make a submission there.](https://www.kaggle.com/c/covid19-global-forecasting-week-4)**\n\n*This is week 3 of Kaggle\u0027s COVID19 forecasting series, following the [Week 2 competition](https://www.kaggle.com/c/covid19-global-forecasting-week-2). This is the 3rd of at least 4 competitions we plan to launch in this series. All of the prior discussion forums have been migrated to this competition for continuity.*\n\n### Background\n\nThe White House Office of Science and Technology Policy (OSTP) pulled together a coalition research groups and companies (including Kaggle)  to prepare the [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge) to attempt to address [key open scientific questions on COVID-19](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks). Those questions are drawn from [National Academies of Sciences, Engineering, and Medicine’s (NASEM)](https://www.nationalacademies.org/event/03-11-2020/standing-committee-on-emerging-infectious-diseases-and-21st-century-health-threats-virtual-meeting-1) and the [World Health Organization (WHO)](https://www.who.int/blueprint/priority-diseases/key-action/Global_Research_Forum_FINAL_VERSION_for_web_14_feb_2020.pdf?ua=1).\n\n### The Challenge\n\nKaggle is launching a companion COVID-19 forecasting challenges to help answer a [subset of the NASEM/WHO questions](https://www.kaggle.com/c/covid19-global-forecasting-week-3/overview/open-scientific-questions). While the challenge involves forecasting confirmed cases and fatalities between April 1 and April 30 by region, the primary goal **isn\u0027t only to produce accurate forecasts**. It’s also to identify factors that appear to impact the transmission rate of COVID-19.\n\nYou are encouraged to pull in, curate and share data sources that might be helpful. If you find variables that look like they impact the transmission rate, please share your finding in a notebook. \n\nAs the data becomes available, we will update the leaderboard with live results based on [data made available](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series) from the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE).\n\nWe have received support and guidance from health and policy organizations in launching these challenges. We\u0027re hopeful the Kaggle community can make valuable contributions to developing a better understanding of factors that impact the transmission of COVID-19. \n\n### Companies and Organizations\n\n**There is also a call to action for companies and other organizations:** If you have datasets that might be useful, please upload them to [Kaggle’s dataset platform](https://www.kaggle.com/datasets) and reference them in [this forum thread](https://www.kaggle.com/c/covid19-global-forecasting-week-3/discussion/137078). That will make them accessible to those participating in this challenge and a resource to the wider scientific community.\n\n### Acknowledgements\n\nJHU CSSE for making the data available to the public. The White House OSTP for pulling together the key open questions. The image comes from the Center for Disease Control.\n\n\u003e **This is a Code Competition. Refer to [Code Requirements](https://www.kaggle.com/c/covid19-global-forecasting-week-3/overview) for details.**\n",
+              mimeType: "text/x-markdown",
+              name: "description",
+              isPublished: false,
+            },
+            rules: {
+              id: 91077,
+              postId: 6424630,
+              content:
+                "### Open-sourcing code and data\n\nIn order for your final selected submission(s) to be eligible for the final leaderboard evaluation, you must make the notebook(s) used to generate them public, along with any external data sources within 48 hours of the close of the submission period.\n\n### One account per participant\n\nYou cannot sign up to Kaggle from multiple accounts and therefore you cannot submit from multiple accounts.\n\n### No private sharing outside teams\n\nPrivately sharing code or data outside of teams is not permitted. It\u0027s okay to share code if made available to all participants on the forums.\n\n### Team Mergers\n\nTeam mergers are allowed and can be performed by the team leader. In order to merge, the combined team must have a total submission count less than or equal to the maximum allowed as of the merge date. The maximum allowed is the number of submissions per day multiplied by the number of days the competition has been running. AMLT Teams are not permitted to enter into a Team merger. \n\n### Team Limits\n\nThe maximum team size is 5.\n\n### Submission Limits\n\nYou may submit a maximum of 10 entries per day.\n\nYou may select up to 2 final submissions for judging.\n\n### Competition Timeline\n\nStart Date: April 1, 2020\n\nMerger Deadline: April 8, 2020\n\nEntry Deadline: April 8, 2020 11:59pm UTC\n\nEnd Date (Final Submission Deadline): **April 8, 2020, 11:59pm UTC**\n\nExternal Data and Model Disclosure Date: April 10, 2020, 11:59pm UTC\n\n### COMPETITION-SPECIFIC TERMS\n\n**COMPETITION TITLE**: COVID19 Global Forecasting (Week 3)\n\n**COMPETITION SPONSOR**: Kaggle\n\n**COMPETITION SPONSOR ADDRESS**: 1600 Amphitheatre Parkway, Mountain View, CA 94043\n\n**COMPETITION WEBSITE**: https://www.kaggle.com/c/covid19-global-forecasting-week-3\n\n**TOTAL PRIZES AVAILABLE**: None\n\n**WINNER LICENSE TYPE**: Open Source\n\n**DATA ACCESS AND USE**: Competition and Academic-Use Only\n\nCompetitions are open to residents of the United States and worldwide, except that if you are a resident of Crimea, Cuba, Iran, Syria, North Korea, Sudan, or are subject to U.S. export controls or sanctions, you may not enter the Competition. Other local rules and regulations may apply to you, so please check your local laws to ensure that you are eligible to participate in skills-based competitions. The Competition Sponsor reserves the right to award alternative Prizes where needed to comply with local laws.\n\n**ENTRY IN THIS COMPETITION CONSTITUTES YOUR ACCEPTANCE OF THESE OFFICIAL COMPETITION RULES.**\n\nThe Competition named above is a skills-based competition to promote and further the field of data science. You must register via the Competition Website to enter. Your competition submissions (\u0022Submissions\u0022) must conform to the requirements stated on the Competition Website. Your Submissions will be scored based on the evaluation metric described on the Competition Website. Subject to compliance with the Competition Rules, Prizes, if any, will be awarded to participants with the best scores, based on the merits of the data science models submitted. See below for the complete Competition Rules.\n\n### A. COMPETITION-SPECIFIC RULES\n\nIn addition to the provisions of the General Competition Rules below, you understand and agree to these Competition-Specific Rules required by the Competition Sponsor:\n\n#### **1. WINNER LICENSE.** \n\nUnder Section 11 (Winners Obligations) of the General Rules below, you hereby grant and will grant Competition Sponsor the following license(s) with respect to your Submission if you are a Competition winner:\n \n*Open Source*: You hereby license and will license your winning Submission and the source code used to generate the Submission under an Open Source Initiative-approved license (see www.opensource.org) that in no event limits commercial use of such code or model containing or depending on such code. For generally commercially available software that you used to generate your submission that is not owned by you, but that can be procured by the Competition Sponsor without undue expense, you do not need to grant the license in the preceding sentence for that software.\n \n#### **2. AUTOMATED MACHINE LEARNING TOOLS (AMLT).** \n\nThis competition permits the use of automated machine learning tool(s) (“AMLT”) in the creation of Submissions. Except as described in this section, AMLT are not permitted to be used in the creation of a Submission.\n \n**A. Submission as an AMLT**\n \nThis competition permits the use of automated machine learning tool(s) (“AMLT”) (i.e. Google AutoML, H2O Driverless AI, etc.) in the creation of Submissions. \n \nIndividual participants and Teams may also use an AMLT to create a Submission, provided that the participant ensures that they have an appropriate license to the AMLT and are able to comply with the Rules.\n \nThe following provision is added to the end of Section 11 of the General Competition Rules below: “Individual participants and Teams who create a Submission using an AMLT may win a Prize. However, for clarity, the potential winner’s Submission must still meet the requirements of these Rules, including but not limited to Section A.1 (Winners License), Section B.11 (Winners Obligations), and Section B.17 (Warranty, Indemnity, and Release).”\n\n#### **3. SUBMISSION CODE REQUIREMENTS**\n\nThe following provision is added to the end of Section 8 of the General Competition Rules below: \n\nD. Eligibility for this competition is contingent on the disclosure of models and data used to produce your submission in the competition forums within 48 hours of the End Date.\n\n### B. GENERAL COMPETITION RULES\n#### **1.\tBINDING AGREEMENT.** \n\nTo enter the Competition, you must agree to these Official Competition Rules, which incorporate by reference the provisions and content of the Competition Website and any Specific Competition Rules above (collectively, the \u0022Rules\u0022). Please read these Rules carefully before entry to ensure you understand and agree. You further agree that submission of an entry in the Competition constitutes agreement to these Rules. You may not submit an entry to the Competition and are not eligible to receive the prizes associated with this Competition (“Prizes”) unless you agree to these Rules. These Rules form a binding legal agreement between you and the Competition Sponsor with respect to the Competition.\n\n#### **2.\tELIGIBILITY.** \n\nA. To be eligible to enter the Competition, you must be:\n\t(i) a registered account holder at Kaggle.com; \n\t(ii) the older of 18 years old or the age of majority in your jurisdiction of residence (unless otherwise agreed to by Competition Sponsor and appropriate parental/guardian consents have been obtained by Competition Sponsor); \n\t(iii) not a resident of Crimea, Cuba, Iran, Syria, North Korea, or Sudan; and\n\t(iv) not a person or representative of an entity under U.S. export controls or sanctions (see [https://www.treasury.gov/resource-center/sanctions/Programs/Pages/Programs.aspx][1]).\n\nIf you are entering as a representative of a company, educational institution or other legal entity, or on behalf of your employer, these rules are binding on you, individually, and the entity you represent or are an employee. If you are acting within the scope of your employment, as an employee, contractor, or agent of another party, you warrant that such party has full knowledge of your actions and has consented thereto, including your potential receipt of a Prize. You further warrant that your actions do not violate your employer\u0027s or entity\u0027s policies and procedures.   \n\nThe Competition Sponsor reserves the right to verify eligibility and to adjudicate on any dispute at any time. If you provide any false information relating to the Competition concerning your identity, residency, mailing address, telephone number, email address, ownership of right, or information required for entering the Competition, you may be immediately disqualified from the Competition.\n\nB. Unless otherwise stated in the Specific Competition Rules above or prohibited by internal policies of the Competition Entities, employees, interns, contractors, officers and directors of Competition Entities may enter and participate in the Competition, but are not eligible to win any Prizes. \u0022Competition Entities\u0022 means the Competition Sponsor, Kaggle Inc., and their respective parent companies, subsidiaries and affiliates. If you are such a participant from a Competition Entity, you are subject to all applicable internal policies of your employer with respect to your participation.\n\n#### **3.\tSPONSOR AND HOSTING PLATFORM.** \n\nThe Competition is sponsored by Competition Sponsor named above. The Competition is hosted on behalf of Competition Sponsor by Kaggle Inc. (\u0022Kaggle\u0022). Kaggle is an independent contractor of Competition Sponsor, and is not a party to this or any agreement between you and Competition Sponsor. You understand that Kaggle has no responsibility with respect to selecting the potential Competition winner(s) or awarding any Prizes. Kaggle will perform certain administrative functions relating to hosting the Competition, and you agree to abide by the provisions relating to Kaggle under these Rules. As a Kaggle.com account holder and user of the Kaggle competition platform, remember you have accepted and are subject to the Kaggle Terms of Service at [www.kaggle.com/terms][2] in addition to these Rules.\n\n#### **4.\tCOMPETITION PERIOD.** \n\nFor the purposes of Prizes, the Competition will run from the Start Date and time to the End Date and time (such duration the “Competition Period”). The Competition Timeline is subject to change, and Competition Sponsor may introduce additional hurdle deadlines during the Competition Period. Any updated or additional deadlines will be publicized on the Competition Website. It is your responsibility to check the Competition Website regularly to stay informed of any deadline changes. *YOU ARE RESPONSIBLE FOR DETERMINING THE CORRESPONDING TIME ZONE IN YOUR LOCATION.* \n\n#### **5.\tCOMPETITION ENTRY.** \n\nNO PURCHASE NECESSARY TO ENTER OR WIN. To enter the Competition, you must register on the Competition Website prior to the Entry Deadline, and follow the instructions for developing and entering your Submission through the Competition Website. Your Submissions must be made in the manner and format, and in compliance with all other requirements, stated on the Competition Website (the \u0022Requirements\u0022). Submissions must be received before any Submission deadlines stated on the Competition Website. Submissions not received by the stated deadlines will not be eligible to receive a Prize.\n\nSubmissions may not use or incorporate information from hand labeling or human prediction of the validation dataset or test data records.\n\nIf the Competition is a multi-stage competition with temporally separate training and/or test data, one or more valid Submissions may be required during each Competition stage in the manner described on the Competition Website in order for the Submissions to be Prize eligible.\n\nSubmissions are void if they are in whole or part illegible, incomplete, damaged, altered, counterfeit, obtained through fraud, or late. Competition Sponsor reserves the right to disqualify any entrant who does not follow these Rules, including making a Submission that does not meet the Requirements. \n\n#### **6.\tINDIVIDUALS AND TEAMS.** \n\nA. *Individual Account*. You may make Submissions only under one, unique Kaggle.com account. You will be disqualified if you make Submissions through more than one Kaggle account, or attempt to falsify an account to act as your proxy. You may submit up to the maximum number of Submissions per day as specified on the Competition Website. \n\nB. *Teams*. If permitted under the Competition Website guidelines, multiple individuals may collaborate as a team (a \u0022Team\u0022); however, you may join or form only one Team. Each Team member must be a single individual with a separate Kaggle account. You must register individually for the Competition before joining a Team. You must confirm your Team membership to make it official by responding to the Team notification message sent to your Kaggle account. Team membership may not exceed the Maximum Team Size stated on the Competition Website.\n\nC. *Team Merger*. Teams may request to merge via the Competition Website. Team mergers may be allowed provided that: (i) the combined Team does not exceed the Maximum Team Size; (ii) the number of Submissions made by the merging Teams does not exceed the number of Submissions permissible for one Team at the date of the merger request; (iii) the merger is completed before the earlier of: any merger deadline or the Competition deadline; and (iv) the proposed combined Team otherwise meets all the requirements of these Rules. \n\n#### **7.\tCOMPETITION DATA.** \n\n\u0022Competition Data\u0022 means the data or datasets available from the Competition Website for the purpose of use in the Competition, including any prototype or executable code provided on the Competition Website. The Competition Data will contain private and public test sets. Which data belongs to which set will not be made available to participants. \n\nA. *Data Access and Use*.  You may access and use the Competition Data for academic purposes only, including for participating in the Competition and on Kaggle.com forums, and for academic research and education. The Competition Sponsor reserves the right to disqualify any participant who uses the Competition Data other than as permitted by the Competition Website and these Rules.\n\nB. *Data Security*. You agree to use reasonable and suitable measures to prevent persons who have not formally agreed to these Rules from gaining access to the Competition Data. You agree not to transmit, duplicate, publish, redistribute or otherwise provide or make available the Competition Data to any party not participating in the Competition. You agree to notify Kaggle immediately upon learning of any possible unauthorized transmission of or unauthorized access to the Competition Data and agree to work with Kaggle to rectify any unauthorized transmission or access.\n\nC. *External Data*. You may use data other than the Competition Data (“External Data”) to develop and test your models and Submissions. However, you will (i) ensure the External Data is available to use by all participants of the competition for purposes of the competition at no cost to the other participants and (ii) post such access to the External Data for the participants to the official competition forum prior to the Entry Deadline.\n\n#### **8.\tSUBMISSION CODE REQUIREMENTS.**\n\nA. *Private Code Sharing*. Unless otherwise specifically permitted under the Competition Website or Competition Specific Rules above, during the Competition Period, you are not allowed to privately share source or executable code developed in connection with or based upon the Competition Data or other source or executable code relevant to the Competition (“Competition Code”). This prohibition includes sharing Competition Code between separate Teams, unless a Team merger occurs. Any such sharing of Competition Code is a breach of these Competition Rules and may result in disqualification.\n\nB. *Public Code Sharing*. You are permitted to publicly share Competition Code, provided that such public sharing does not violate the intellectual property rights of any third party. If you do choose to share Competition Code or other such code, you are required to share it on Kaggle.com on the discussion forum or kernels associated specifically with the Competition for the benefit of all competitors. By so sharing, you are deemed to have licensed the shared code under an Open Source Initiative-approved license (see [www.opensource.org][3]) that in no event limits commercial use of such Competition Code or model containing or depending on such Competition Code.\n\nC. *Use of Open Source*. Unless otherwise stated in the Specific Competition Rules above, if open source code is used in the model to generate the Submission, then you must only use open source code licensed under an Open Source Initiative-approved license (see [www.opensource.org][4]) that in no event limits commercial use of such code or model containing or depending on such code.\n\n#### **9.\tDETERMINING LEADERBOARD.** \n\nEach Submission will be scored and ranked by the evaluation metric stated on the Competition Website. During the Competition Period, the current ranking will be visible on the Competition Website\u0027s public leaderboard. The public leaderboard will be based on the public test set and the private leaderboard will be based on the private test set.\n\nIn the event of a tie, the Submission that was entered first to the Competition will be ranked higher.\n\n#### **10.\tDISQUALIFICATION.**\n\nCompetition Sponsor reserves the right to disqualify any participant from the Competition if the Competition Sponsor reasonably believes that the participant has attempted to undermine the legitimate operation of the Competition by cheating, deception, or other unfair playing practices or abuses, threatens or harasses any other participants, Competition Sponsor or Kaggle.\n \nA disqualified participant may be removed from the Competition leaderboard, at Kaggle\u0027s sole discretion.\n \nThe final leaderboard list will be publicly displayed at Kaggle.com. Determinations of Competition Sponsor are final and binding.\n\n#### **11.\tGENERAL CONDITIONS.**  \n\nAll federal, state, provincial and local laws and regulations apply.   \n\n#### **12.\tPUBLICITY.**\n\nYou agree that Competition Sponsor, Kaggle and its affiliates may use your name and likeness for advertising and promotional purposes without additional compensation, unless prohibited by law.\n\n#### **13.\tPRIVACY.**\n\nYou acknowledge and agree that Competition Sponsor and Kaggle may collect, store, share and otherwise use personally identifiable information provided by you during the Kaggle account registration process and the Competition, including but not limited to, name, mailing address, phone number, and email address (“Personal Information”). Kaggle acts as an independent controller with regard to its collection, storage, sharing, and other use of this Personal Information, and will use this Personal Information in accordance with its Privacy Policy \u003c[www.kaggle.com/privacy][6]\u003e, including for administering the Competition. As a Kaggle.com account holder, you have the right to request access to, review, rectification, portability or deletion of any personal data held by Kaggle about you by logging into your account and/or contacting Kaggle Support at \u003c[www.kaggle.com/contact][7]\u003e.\n\n As part of Competition Sponsor performing this contract between you and the Competition Sponsor, Kaggle will transfer your Personal Information to Competition Sponsor, which acts as an independent controller with regard to this Personal Information. As a controller of such Personal Information, Competition Sponsor agrees to comply with all U.S. and foreign data protection obligations with regard to your Personal Information. Kaggle will transfer your Personal Information to Competition Sponsor in the country specified in the Competition Sponsor Address listed above, which may be a country outside the country of your residence. Such country may not have privacy laws and regulations similar to those of the country of your residence.\n\n#### **14.\tWARRANTY, INDEMNITY AND RELEASE.** \n\nYou warrant that your Submission is your own original work and, as such, you are the sole and exclusive owner and rights holder of the Submission, and you have the right to make the Submission and grant all required licenses.  You agree not to make any Submission that: (i) infringes any third party proprietary rights, intellectual property rights, industrial property rights, personal or moral rights or any other rights, including without limitation, copyright, trademark, patent, trade secret, privacy, publicity or confidentiality obligations, or defames any person; or (ii) otherwise violates any applicable U.S. or foreign state or federal law.\n\nTo the maximum extent permitted by law, you indemnify and agree to keep indemnified Competition Entities at all times from and against any liability, claims, demands, losses, damages, costs and expenses resulting from any of your acts, defaults or omissions and/or a breach of any warranty set forth herein. To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless the Competition Entities from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from: (a) your Submission or other material uploaded or otherwise provided by you that infringes any third party proprietary rights, intellectual property rights, industrial property rights, personal or moral rights or any other rights, including without limitation, copyright, trademark, patent, trade secret, privacy, publicity or confidentiality obligations, or defames any person; (b) any misrepresentation made by you in connection with the Competition; (c) any non-compliance by you with these Rules or any applicable U.S. or foreign state or federal law; (d) claims brought by persons or entities other than the parties to these Rules arising from or related to your involvement with the Competition; and (e) your acceptance, possession, misuse or use of any Prize, or your participation in the Competition and any Competition-related activity.\n\nYou hereby release Competition Entities from any liability associated with: (a) any malfunction or other problem with the Competition Website; (b) any error in the collection, processing, or retention of any Submission; or (c) any typographical or other error in the printing, offering or announcement of any Prize or winners.\n\n#### **15.\tINTERNET.** \n\nCompetition Entities are not responsible for any malfunction of the Competition Website or any late, lost, damaged, misdirected, incomplete, illegible, undeliverable, or destroyed Submissions or entry materials due to system errors, failed, incomplete or garbled computer or other telecommunication transmission malfunctions, hardware or software failures of any kind, lost or unavailable network connections, typographical or system/human errors and failures, technical malfunction(s) of any telephone network or lines, cable connections, satellite transmissions, servers or providers, or computer equipment, traffic congestion on the Internet or at the Competition Website, or any combination thereof, which may limit a participant’s ability to participate.\n\n#### **16.\tRIGHT TO CANCEL, MODIFY OR DISQUALIFY.**\n\nIf for any reason the Competition is not capable of running as planned, including infection by computer virus, bugs, tampering, unauthorized intervention, fraud, technical failures, or any other causes which corrupt or affect the administration, security, fairness, integrity, or proper conduct of the Competition, Competition Sponsor reserves the right to cancel, terminate, modify or suspend the Competition. Competition Sponsor further reserves the right to disqualify any participant who tampers with the submission process or any other part of the Competition or Competition Website.  Any attempt by a participant to deliberately damage any website, including the Competition Website, or undermine the legitimate operation of the Competition is a violation of criminal and civil laws. Should such an attempt be made, Competition Sponsor and Kaggle each reserves the right to seek damages from any such participant to the fullest extent of the applicable law.\n\n#### **17.\tNOT AN OFFER OR CONTRACT OF EMPLOYMENT.**\n\nUnder no circumstances will the entry of a Submission, the awarding of a Prize, or anything in these Rules be construed as an offer or contract of employment with Competition Sponsor or any of the Competition Entities. You acknowledge that you have submitted your Submission voluntarily and not in confidence or in trust. You acknowledge that no confidential, fiduciary, agency, employment or other similar relationship is created between you and Competition Sponsor or any of the Competition Entities by your acceptance of these Rules or your entry of your Submission.\n\n#### **18.\tGOVERNING LAW.** \n\nUnless otherwise provided in the Competition Specific Rules above, all claims arising out of or relating to these Rules will be governed by California law, excluding its conflict of laws rules, and will be litigated exclusively in the Federal or State courts of Santa Clara County, California, USA. The parties consent to personal jurisdiction in those courts. If any provision of these Rules is held to be invalid or unenforceable, all remaining provisions of the Rules will remain in full force and effect.\n\n\n  [1]: https://www.treasury.gov/resource-center/sanctions/Programs/Pages/Programs.aspx\n  [2]: http://www.kaggle.com/terms\n  [3]: http://www.opensource.org\n  [4]: http://www.opensource.org\n  [5]: https://www.kaggle.com/WinningModelDocumentationGuidelines\n  [6]: http://www.kaggle.com/privacy\n  [7]: http://www.kaggle.com/contact",
+              mimeType: "text/markdown",
+              name: "rules",
+              isPublished: false,
+            },
+            dataIntro: {
+              id: 91078,
+              postId: 6424631,
+              content:
+                "In this challenge, you will be predicting the *cumulative* number of confirmed COVID19 cases in various locations across the world, as well as the number of resulting fatalities, for _future_ dates.\n\n*We understand this is a serious situation, and in no way want to trivialize the human impact this crisis is causing by predicting fatalities. Our goal is to provide better methods for estimates that can assist medical and governmental institutions to prepare and adjust as pandemics unfold*.\n\n## Files\n - `train.csv` - the training data (you are encouraged to join in many more useful external datasets)\n - `test.csv` - the dates to predict; there is a week of overlap with the training data for the initial Public leaderboard. Once submissions are paused, the Public leaderboard will update based on last 28 days of predicted data.\n - `submission.csv` - a sample submission in the correct format; again, predictions should be *cumulative*\n\n## Data Source\n - This evaluation data for this competition comes from **[John Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)**, which is uninvolved in the competition. \n - See their [README](https://github.com/CSSEGISandData/COVID-19) for a description of how the data was collected.\n - They are currently updating the data daily.",
+              mimeType: "text/markdown",
+              name: "data-description",
+              isPublished: false,
+            },
+            evaluation: null,
+            prizes: null,
+            competitionSlug: "covid19-global-forecasting-week-3",
+            numPrizes: 0,
+            leaderboardPercentage: 33,
+            hasHeaderImage: true,
+            hasLimitedParticipation: false,
+            hasScripts: true,
+            acceptRulesUrl:
+              "/c/covid19-global-forecasting-week-3/rules/accept.json?doAccept=True",
+            setFinalScoreSubmissionsUrl:
+              "/c/covid19-global-forecasting-week-3/submissions/final.json",
+            updateSubmissionUrl:
+              "/c/covid19-global-forecasting-week-3/submissions/update.json",
+            newScriptUrl:
+              "/kernels/scripts/new?userName=taahakazi\u0026competitionId=19853",
+            addImageUrl: null,
+            discussion: {
+              canDownvote: false,
+              dataUrl: "/forums/607256/topics.json",
+              id: 607256,
+              isRootLevel: false,
+              showSubscribeButton: false,
+              isSubscribed: false,
+              subscription: "unsubscribe",
+              initialTopics: null,
+              paramValues: {
+                category: "all",
+                page: 1,
+                search: null,
+                group: "all",
+                sortBy: "hot",
+              },
+            },
+            competitionThumbnailImageUrl:
+              "https://storage.googleapis.com/kaggle-competitions/kaggle/19853/logos/thumb76_76.png?t=2020-04-01-21-46-04",
+            competitionFrontPageImageUrl: "",
+            submissionStatusUrl:
+              "/c/covid19-global-forecasting-week-3/submissions/status.json",
+            newTopic: {
+              allowAttachments: true,
+              authorRanking: null,
+              authorTier: "novice",
+              authorType: "topic",
+              forumId: 607256,
+              parentName: "COVID19 Global Forecasting (Week 3)",
+              parentUrl: "/c/covid19-global-forecasting-week-3",
+            },
+            numScoredSubmissions: 2,
+            maxDailySubmissions: 10,
+            maxDailySubmissionsResetDate: "2020-04-12T00:00:00Z",
+            remainingDailySubmissions: null,
+            totalSolutionRows: 13158,
+            team: null,
+            maxTeamSize: 5,
+            topicTitle: null,
+            topicId: null,
+            saveOverviewUrl:
+              "/c/covid19-global-forecasting-week-3/overview.json",
+            saveRulesUrl: "/c/covid19-global-forecasting-week-3/rules.json",
+            saveDataUrl: "/c/covid19-global-forecasting-week-3/data.json",
+            totalCompetitors: 515,
+            totalEntries: 2097,
+            countsTowardsRanking: true,
+            countsTowardsTiers: false,
+            evaluationAlgorithm: {
+              id: 307,
+              name: "Mean Columnwise Root Mean Squared Logarithmic Error",
+              description: "Average of the RMSLE of each column.",
+              submissionFileFormatId: null,
+              competitionId: null,
+              isMax: false,
+              requiresSameRowCountInSubmissionAndSolution: true,
+            },
+            submissionUploadUrl: null,
+            submissionSubmitUrl:
+              "/c/covid19-global-forecasting-week-3/submission.json",
+            totalDiscussions: 2,
+            totalKernels: 0,
+            allowPrivateLeaderboardDisplay: true,
+            isCreatingCompetition: false,
+            pages: [
+              {
+                id: 91079,
+                postId: 6458489,
+                content:
+                  "**[This week 3 forecasting task is now closed for submissions. Click here to visit the week 4 version, and make a submission there.](https://www.kaggle.com/c/covid19-global-forecasting-week-4)**\n\n*This is week 3 of Kaggle\u0027s COVID19 forecasting series, following the [Week 2 competition](https://www.kaggle.com/c/covid19-global-forecasting-week-2). This is the 3rd of at least 4 competitions we plan to launch in this series. All of the prior discussion forums have been migrated to this competition for continuity.*\n\n### Background\n\nThe White House Office of Science and Technology Policy (OSTP) pulled together a coalition research groups and companies (including Kaggle)  to prepare the [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge) to attempt to address [key open scientific questions on COVID-19](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks). Those questions are drawn from [National Academies of Sciences, Engineering, and Medicine’s (NASEM)](https://www.nationalacademies.org/event/03-11-2020/standing-committee-on-emerging-infectious-diseases-and-21st-century-health-threats-virtual-meeting-1) and the [World Health Organization (WHO)](https://www.who.int/blueprint/priority-diseases/key-action/Global_Research_Forum_FINAL_VERSION_for_web_14_feb_2020.pdf?ua=1).\n\n### The Challenge\n\nKaggle is launching a companion COVID-19 forecasting challenges to help answer a [subset of the NASEM/WHO questions](https://www.kaggle.com/c/covid19-global-forecasting-week-3/overview/open-scientific-questions). While the challenge involves forecasting confirmed cases and fatalities between April 1 and April 30 by region, the primary goal **isn\u0027t only to produce accurate forecasts**. It’s also to identify factors that appear to impact the transmission rate of COVID-19.\n\nYou are encouraged to pull in, curate and share data sources that might be helpful. If you find variables that look like they impact the transmission rate, please share your finding in a notebook. \n\nAs the data becomes available, we will update the leaderboard with live results based on [data made available](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series) from the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE).\n\nWe have received support and guidance from health and policy organizations in launching these challenges. We\u0027re hopeful the Kaggle community can make valuable contributions to developing a better understanding of factors that impact the transmission of COVID-19. \n\n### Companies and Organizations\n\n**There is also a call to action for companies and other organizations:** If you have datasets that might be useful, please upload them to [Kaggle’s dataset platform](https://www.kaggle.com/datasets) and reference them in [this forum thread](https://www.kaggle.com/c/covid19-global-forecasting-week-3/discussion/137078). That will make them accessible to those participating in this challenge and a resource to the wider scientific community.\n\n### Acknowledgements\n\nJHU CSSE for making the data available to the public. The White House OSTP for pulling together the key open questions. The image comes from the Center for Disease Control.\n\n\u003e **This is a Code Competition. Refer to [Code Requirements](https://www.kaggle.com/c/covid19-global-forecasting-week-3/overview) for details.**\n",
+                mimeType: "text/x-markdown",
+                name: "description",
+                isPublished: true,
+              },
+              {
+                id: 91080,
+                postId: 6429195,
+                content:
+                  "##Public and Private Leaderboard\n\nTo have a public leaderboard for this forecasting task, we will be using data from 7 days before to 7 days after competition launch. Only use data prior to 2020-03-26 for predictions on the public leaderboard period. Use up to and including the most recent data for predictions on the private leaderboard period.\n\n- **Public Leaderboard Period** - 2020-03-26 - 2020-04-08\n- **Private Leaderboard Period** - 2020-04-09 - 2020-05-07\n\n##Evaluation\n\nSubmissions are evaluated using the column-wise \u003ca href=\u0022https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError\u0022\u003eroot mean squared  logarithmic error\u003c/a\u003e.\n\u003cp\u003eThe RMSLE for a single column calculated as\u003c/p\u003e\n\u003cp\u003e$$\\sqrt{\\frac{1}{n} \\sum_{i=1}^n (\\log(p_i + 1) - \\log(a_i+1))^2 },\u003cbr /\u003e$$\u003c/p\u003e\n\u003cp\u003ewhere:\u003c/p\u003e\n\u003cp\u003e\\\\(n\\\\) is the total number of observations \u003cbr /\u003e\\\\(p_i\\\\) is your prediction\u003cbr /\u003e\\\\(a_i\\\\) is the actual value \u003cbr /\u003e\\\\(\\log(x)\\\\) is the natural logarithm of \\\\(x\\\\)\u003c/p\u003e\n\u003cp\u003eThe final score is the mean of the RMSLE over all columns (in this case, 2).\u003c/p\u003e\n\n## Submission File\n\n*We understand this is a serious situation, and in no way want to trivialize the human impact this crisis is causing by predicting fatalities. Our goal is to provide better methods for estimates that can assist medical and governmental institutions to prepare and adjust as pandemics unfold*.\n\nFor each `ForecastId` in the test set, you\u0027ll predict the *cumulative* COVID-19 cases and fatalities to date. The file should contain a header and have the following format:\n\n    ForecastId,ConfirmedCases,Fatalities\n    1,10,0\n    2,10,0\n    3,10,0\n    etc.\n\nYou will get the `ForecastId` for the corresponding date and location from the `test.csv` file.",
+                mimeType: "text/x-markdown",
+                name: "evaluation",
+                isPublished: true,
+              },
+              {
+                id: 91081,
+                postId: 6424688,
+                content:
+                  "* **April 2, 2020** - Forecasting task launched\n\n* **April 8, 2020** (11:59pm UTC)\u0026nbsp;-\u0026nbsp;Entry deadline. You must accept the rules before this date in order to participate.\n\n* **April 8, 2020** (11:59pm UTC)\u0026nbsp;- Team Merger deadline. This is the last day participants\u0026nbsp;may join or merge teams.\n\n* **April 8, 2020** (11:59pm UTC)\u0026nbsp;- Final submission deadline.\n\n* **April 10, 2020** (11:59pm UTC)\u0026nbsp;- Publishing code/data deadline.\n\n* **April 9, 2020 - May 7, 2020** - Evaluation data period\n \n\nThe organizers reserve the right to update the timeline if they deem it necessary.",
+                mimeType: "text/x-markdown",
+                name: "timeline",
+                isPublished: true,
+              },
+              {
+                id: 91083,
+                postId: 6424691,
+                content:
+                  "![Kerneler](https://storage.googleapis.com/kaggle-media/competitions/general/Kerneler-white-desc2_transparent.png)\n### This is a Code Competition\n\nSubmissions to this competition must be made through Notebooks. \n\n- Submission file must be named \u0022submission.csv\u0022\n- External data is allowed, and you are allowed to train your model offline, upload that or your prediction file as an external dataset, and submit it through a notebook.\n\nPlease see the [Code Competition FAQ](https://www.kaggle.com/docs/competitions#kernels-only-FAQ) for details.\n\n### Open-sourcing code and data\n\nIn order for your final selected submission(s) to be eligible for the final leaderboard evaluation, you must make the notebook(s) used to generate them public, along with any external data sources within 48 hours of the close of the submission period.",
+                mimeType: "text/x-markdown",
+                name: "Code Requirements",
+                isPublished: true,
+              },
+              {
+                id: 91084,
+                postId: 6424694,
+                content:
+                  "Datasets sourced and models built for this competition may also help address **[key open scientific questions](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks)** on COVID-19. Some examples include:\n\n- **[What do we know about non-pharmaceutical interventions?](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks?taskId=587)** E.g. Dataset on policy actions taken by region (school closures, cancelling large gatherings, self isolation, etc.). Data that might help estimate likely compliance with policy actions (e.g. concentration of small businesses) and degree of fear (potentially picked up from Google Trends or social media data). \n- **[What is known about transmission, incubation, and environmental stability?](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks?taskId=568)** E.g. Data on temperature, humidity and air pollution by region. \n- **[What do we know about COVID-19 risk factors?](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks?taskId=558)**  E.g. Percentage of the population that smokes in a region or country. \n- **[What has been published about medical care?](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/tasks?taskId=572)** E.g. Data on number of doctors, nurses, hospitals by region or country. ",
+                mimeType: "text/markdown",
+                name: "Open Scientific Questions",
+                isPublished: true,
+              },
+            ],
+            files: [
+              {
+                id: 0,
+                name: "test.csv",
+                description: null,
+                totalBytes: 384196,
+                url: null,
+                previewUrl: null,
+                supersededById: null,
+                dateCreated: "2020-04-08T01:56:01.3681454Z",
+              },
+              {
+                id: 0,
+                name: "submission.csv",
+                description: null,
+                totalBytes: 120511,
+                url: null,
+                previewUrl: null,
+                supersededById: null,
+                dateCreated: "2020-04-08T01:56:01.3681454Z",
+              },
+              {
+                id: 0,
+                name: "train.csv",
+                description: null,
+                totalBytes: 906719,
+                url: null,
+                previewUrl: null,
+                supersededById: null,
+                dateCreated: "2020-04-08T01:56:01.3681454Z",
+              },
+            ],
+            databundle: {
+              id: 1095900,
+              databundleId: 603315,
+              databundleVersionType: "fileset",
+              databundleDiffType: "versioned",
+              versionNumber: 7,
+              zipBlobFileId: 0,
+              totalSize: 244631,
+              ownerInfo: {
+                databundleVersionId: 1095900,
+                dataset: null,
+                competition: {
+                  competitionId: 19853,
+                  dataviewToken: null,
+                  scope: "c/covid19-global-forecasting-week-3",
+                },
+                kernel: null,
+                previewsDisabled: true,
+              },
+              usesArchiveV2: true,
+              hasBundleDownload: true,
+              type: "databundleVersion",
+              collapsed: false,
+              info: {
+                metrics: null,
+                archiveInfo: null,
+                archiveInfoV2: null,
+                blobFileInfo: null,
+                convertCsvInfo: null,
+                kernelReference: null,
+              },
+              settings: {
+                csvSettings: null,
+                bigQuerySettings: null,
+                bigQueryMirrorSettings: null,
+                storageSettings: {
+                  webDataLocation: {
+                    bucket: "kaggle-competitions-data",
+                    path: "kaggle-v2/19853/1095900/upload",
+                  },
+                  sdsDataLocation: {
+                    bucket: "kagglesdsdata",
+                    path: "competitions/19853/1095900",
+                  },
+                  responseDataLocation: null,
+                },
+                remoteUrlSettings: null,
+                remoteGithubSettings: null,
+              },
+              render: null,
+              totalChildren: 0,
+              children: [
+                {
+                  id: 0,
+                  blobFileId: 0,
+                  databundleVersionId: 1095900,
+                  databundleVersionObjectType: "file",
+                  url: null,
+                  relativePath: "submission.csv",
+                  creationDate: null,
+                  isDummy: false,
+                  size: 120511,
+                  fullPath: "submission.csv",
+                  previewUrl: null,
+                  downloadUrl:
+                    "/c/covid19-global-forecasting-week-3/download/XPSj1SmS6WvijX8UDb9m%2Fversions%2FMqNLyiIiWeuvrmbAH432%2Ffiles%2Fsubmission.csv",
+                  fileType: ".csv",
+                  contentLength: 120511,
+                  contentType: "text/csv",
+                  contentMD5: "URuGNwhpFoFujRGOLUCiFg==",
+                  validationErrors: null,
+                  type: "databundleVersionObject",
+                  collapsed: false,
+                  info: {
+                    metrics: null,
+                    archiveInfo: null,
+                    archiveInfoV2: null,
+                    blobFileInfo: null,
+                    convertCsvInfo: null,
+                    kernelReference: null,
+                  },
+                  settings: {
+                    csvSettings: null,
+                    bigQuerySettings: null,
+                    bigQueryMirrorSettings: null,
+                    storageSettings: null,
+                    remoteUrlSettings: null,
+                    remoteGithubSettings: null,
+                  },
+                  render: null,
+                  totalChildren: 3,
+                  children: [
+                    {
+                      columns: [
+                        {
+                          order: 0,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "id",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 13158,
+                              infiniteCount: 0,
+                              mean: 6579.5,
+                              standardDeviation: 3798.3874100289804,
+                              minimum: 1.0,
+                              minimumFinite: 1.0,
+                              maximum: 13158.0,
+                              maximumFinite: 13158.0,
+                              quantiles: [
+                                { point: 0.25, value: 3290.0 },
+                                { point: 0.5, value: 6580.0 },
+                                { point: 0.75, value: 9869.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "1.00 - 658.85",
+                                    leftValue: "-Infinity",
+                                    rightValue: 658.85,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "658.85 - 1316.70",
+                                    leftValue: 658.85,
+                                    rightValue: 1316.7,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "1316.70 - 1974.55",
+                                    leftValue: 1316.7,
+                                    rightValue: 1974.5500000000002,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "1974.55 - 2632.40",
+                                    leftValue: 1974.5500000000002,
+                                    rightValue: 2632.4,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "2632.40 - 3290.25",
+                                    leftValue: 2632.4,
+                                    rightValue: 3290.25,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "3290.25 - 3948.10",
+                                    leftValue: 3290.25,
+                                    rightValue: 3948.1000000000004,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "3948.10 - 4605.95",
+                                    leftValue: 3948.1000000000004,
+                                    rightValue: 4605.95,
+                                    count: 657,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "4605.95 - 5263.80",
+                                    leftValue: 4605.95,
+                                    rightValue: 5263.8,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "5263.80 - 5921.65",
+                                    leftValue: 5263.8,
+                                    rightValue: 5921.650000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "5921.65 - 6579.50",
+                                    leftValue: 5921.650000000001,
+                                    rightValue: 6579.5,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "6579.50 - 7237.35",
+                                    leftValue: 6579.5,
+                                    rightValue: 7237.35,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "7237.35 - 7895.20",
+                                    leftValue: 7237.35,
+                                    rightValue: 7895.200000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "7895.20 - 8553.05",
+                                    leftValue: 7895.200000000001,
+                                    rightValue: 8553.050000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "8553.05 - 9210.90",
+                                    leftValue: 8553.050000000001,
+                                    rightValue: 9210.9,
+                                    count: 657,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "9210.90 - 9868.75",
+                                    leftValue: 9210.9,
+                                    rightValue: 9868.75,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "9868.75 - 10526.60",
+                                    leftValue: 9868.75,
+                                    rightValue: 10526.6,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "10526.60 - 11184.45",
+                                    leftValue: 10526.6,
+                                    rightValue: 11184.45,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "11184.45 - 11842.30",
+                                    leftValue: 11184.45,
+                                    rightValue: 11842.300000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "11842.30 - 12500.15",
+                                    leftValue: 11842.300000000001,
+                                    rightValue: 12500.15,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "12500.15 - 13158.00",
+                                    leftValue: 12500.15,
+                                    rightValue: "Infinity",
+                                    count: 658,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 0,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "id",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/al3f78r1XfabCs3pHVQh",
+                                firestoreKey: "al3f78r1XfabCs3pHVQh",
+                                name: "ForecastId",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "id",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/al3f78r1XfabCs3pHVQh",
+                          firestoreKey: "al3f78r1XfabCs3pHVQh",
+                          name: "ForecastId",
+                          description: null,
+                        },
+                        {
+                          order: 1,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "integer",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 13158,
+                              infiniteCount: 0,
+                              mean: 1.0,
+                              standardDeviation: 0.0,
+                              minimum: 1.0,
+                              minimumFinite: 1.0,
+                              maximum: 1.0,
+                              maximumFinite: 1.0,
+                              quantiles: [
+                                { point: 0.25, value: 1.0 },
+                                { point: 0.5, value: 1.0 },
+                                { point: 0.75, value: 1.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "1.00 - 1.00",
+                                    leftValue: 1.0,
+                                    rightValue: 1.0,
+                                    count: 13158,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 1,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "integer",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/SbKLYejp7TywZPZrrw5Y",
+                                firestoreKey: "SbKLYejp7TywZPZrrw5Y",
+                                name: "ConfirmedCases",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "integer",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/SbKLYejp7TywZPZrrw5Y",
+                          firestoreKey: "SbKLYejp7TywZPZrrw5Y",
+                          name: "ConfirmedCases",
+                          description: null,
+                        },
+                        {
+                          order: 2,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "integer",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 13158,
+                              infiniteCount: 0,
+                              mean: 1.0,
+                              standardDeviation: 0.0,
+                              minimum: 1.0,
+                              minimumFinite: 1.0,
+                              maximum: 1.0,
+                              maximumFinite: 1.0,
+                              quantiles: [
+                                { point: 0.25, value: 1.0 },
+                                { point: 0.5, value: 1.0 },
+                                { point: 0.75, value: 1.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "1.00 - 1.00",
+                                    leftValue: 1.0,
+                                    rightValue: 1.0,
+                                    count: 13158,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 2,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "integer",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/MzqyySuQte8GF5gD3VLN",
+                                firestoreKey: "MzqyySuQte8GF5gD3VLN",
+                                name: "Fatalities",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "integer",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv/columns/MzqyySuQte8GF5gD3VLN",
+                          firestoreKey: "MzqyySuQte8GF5gD3VLN",
+                          name: "Fatalities",
+                          description: null,
+                        },
+                      ],
+                      totalRows: 13158,
+                      type: "genericTable",
+                      collapsed: true,
+                      info: null,
+                      settings: null,
+                      render: null,
+                      totalChildren: 0,
+                      children: [],
+                      firestorePath: null,
+                      firestoreKey: null,
+                      name: "",
+                      description: null,
+                    },
+                  ],
+                  firestorePath:
+                    "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/submission.csv",
+                  firestoreKey: "submission.csv",
+                  name: "submission.csv",
+                  description: null,
+                },
+                {
+                  id: 0,
+                  blobFileId: 0,
+                  databundleVersionId: 1095900,
+                  databundleVersionObjectType: "file",
+                  url: null,
+                  relativePath: "test.csv",
+                  creationDate: null,
+                  isDummy: false,
+                  size: 384196,
+                  fullPath: "test.csv",
+                  previewUrl: null,
+                  downloadUrl:
+                    "/c/covid19-global-forecasting-week-3/download/XPSj1SmS6WvijX8UDb9m%2Fversions%2FMqNLyiIiWeuvrmbAH432%2Ffiles%2Ftest.csv",
+                  fileType: ".csv",
+                  contentLength: 384196,
+                  contentType: "text/csv",
+                  contentMD5: "1J5WbdKIKTzx4NEfZTZedg==",
+                  validationErrors: null,
+                  type: "databundleVersionObject",
+                  collapsed: false,
+                  info: {
+                    metrics: null,
+                    archiveInfo: null,
+                    archiveInfoV2: null,
+                    blobFileInfo: null,
+                    convertCsvInfo: null,
+                    kernelReference: null,
+                  },
+                  settings: {
+                    csvSettings: null,
+                    bigQuerySettings: null,
+                    bigQueryMirrorSettings: null,
+                    storageSettings: null,
+                    remoteUrlSettings: null,
+                    remoteGithubSettings: null,
+                  },
+                  render: null,
+                  totalChildren: 4,
+                  children: [
+                    {
+                      columns: [
+                        {
+                          order: 0,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "id",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 13158,
+                              infiniteCount: 0,
+                              mean: 6579.5,
+                              standardDeviation: 3798.3874100289804,
+                              minimum: 1.0,
+                              minimumFinite: 1.0,
+                              maximum: 13158.0,
+                              maximumFinite: 13158.0,
+                              quantiles: [
+                                { point: 0.25, value: 3290.0 },
+                                { point: 0.5, value: 6580.0 },
+                                { point: 0.75, value: 9869.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "1.00 - 658.85",
+                                    leftValue: "-Infinity",
+                                    rightValue: 658.85,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "658.85 - 1316.70",
+                                    leftValue: 658.85,
+                                    rightValue: 1316.7,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "1316.70 - 1974.55",
+                                    leftValue: 1316.7,
+                                    rightValue: 1974.5500000000002,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "1974.55 - 2632.40",
+                                    leftValue: 1974.5500000000002,
+                                    rightValue: 2632.4,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "2632.40 - 3290.25",
+                                    leftValue: 2632.4,
+                                    rightValue: 3290.25,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "3290.25 - 3948.10",
+                                    leftValue: 3290.25,
+                                    rightValue: 3948.1000000000004,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "3948.10 - 4605.95",
+                                    leftValue: 3948.1000000000004,
+                                    rightValue: 4605.95,
+                                    count: 657,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "4605.95 - 5263.80",
+                                    leftValue: 4605.95,
+                                    rightValue: 5263.8,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "5263.80 - 5921.65",
+                                    leftValue: 5263.8,
+                                    rightValue: 5921.650000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "5921.65 - 6579.50",
+                                    leftValue: 5921.650000000001,
+                                    rightValue: 6579.5,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "6579.50 - 7237.35",
+                                    leftValue: 6579.5,
+                                    rightValue: 7237.35,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "7237.35 - 7895.20",
+                                    leftValue: 7237.35,
+                                    rightValue: 7895.200000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "7895.20 - 8553.05",
+                                    leftValue: 7895.200000000001,
+                                    rightValue: 8553.050000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "8553.05 - 9210.90",
+                                    leftValue: 8553.050000000001,
+                                    rightValue: 9210.9,
+                                    count: 657,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "9210.90 - 9868.75",
+                                    leftValue: 9210.9,
+                                    rightValue: 9868.75,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "9868.75 - 10526.60",
+                                    leftValue: 9868.75,
+                                    rightValue: 10526.6,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "10526.60 - 11184.45",
+                                    leftValue: 10526.6,
+                                    rightValue: 11184.45,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "11184.45 - 11842.30",
+                                    leftValue: 11184.45,
+                                    rightValue: 11842.300000000001,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "11842.30 - 12500.15",
+                                    leftValue: 11842.300000000001,
+                                    rightValue: 12500.15,
+                                    count: 658,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "12500.15 - 13158.00",
+                                    leftValue: 12500.15,
+                                    rightValue: "Infinity",
+                                    count: 658,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 0,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "id",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/WtVFarIjutKbCXD0lOPj",
+                                firestoreKey: "WtVFarIjutKbCXD0lOPj",
+                                name: "ForecastId",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "id",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/WtVFarIjutKbCXD0lOPj",
+                          firestoreKey: "WtVFarIjutKbCXD0lOPj",
+                          name: "ForecastId",
+                          description: null,
+                        },
+                        {
+                          order: 1,
+                          originalType: "",
+                          type: "string",
+                          extendedType: null,
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              counts: [
+                                {
+                                  key: "Australian Capital Territory",
+                                  value: 43,
+                                },
+                                { key: "New South Wales", value: 43 },
+                                { key: "Northern Territory", value: 43 },
+                                { key: "Queensland", value: 43 },
+                                { key: "South Australia", value: 43 },
+                              ],
+                              uniqueValueCount: 130,
+                              mostCommonValue: "Australian Capital Territory",
+                              mostCommonValueCount: 43,
+                              column: {
+                                order: 1,
+                                originalType: null,
+                                type: "string",
+                                extendedType: null,
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/QLVNdnvWOVsUPR63ZsFu",
+                                firestoreKey: "QLVNdnvWOVsUPR63ZsFu",
+                                name: "Province_State",
+                                description: null,
+                              },
+                              type: "string",
+                              extendedType: null,
+                              exception: null,
+                              nullCount: 7568,
+                              nonNullCount: 5590,
+                              validCount: 5590,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/QLVNdnvWOVsUPR63ZsFu",
+                          firestoreKey: "QLVNdnvWOVsUPR63ZsFu",
+                          name: "Province_State",
+                          description: null,
+                        },
+                        {
+                          order: 2,
+                          originalType: "",
+                          type: "string",
+                          extendedType: "country",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              counts: [
+                                { key: "US", value: 2322 },
+                                { key: "China", value: 1419 },
+                                { key: "Canada", value: 516 },
+                                { key: "France", value: 430 },
+                                { key: "United Kingdom", value: 430 },
+                                { key: "Australia", value: 344 },
+                                { key: "Netherlands", value: 172 },
+                                { key: "Denmark", value: 129 },
+                                { key: "Afghanistan", value: 43 },
+                                { key: "Albania", value: 43 },
+                                { key: "Algeria", value: 43 },
+                                { key: "Andorra", value: 43 },
+                                { key: "Angola", value: 43 },
+                                { key: "Antigua and Barbuda", value: 43 },
+                                { key: "Argentina", value: 43 },
+                                { key: "Armenia", value: 43 },
+                                { key: "Austria", value: 43 },
+                                { key: "Azerbaijan", value: 43 },
+                                { key: "Bahamas", value: 43 },
+                                { key: "Bahrain", value: 43 },
+                                { key: "Bangladesh", value: 43 },
+                                { key: "Barbados", value: 43 },
+                                { key: "Belarus", value: 43 },
+                                { key: "Belgium", value: 43 },
+                                { key: "Belize", value: 43 },
+                                { key: "Benin", value: 43 },
+                                { key: "Bhutan", value: 43 },
+                                { key: "Bolivia", value: 43 },
+                                { key: "Bosnia and Herzegovina", value: 43 },
+                                { key: "Botswana", value: 43 },
+                                { key: "Brazil", value: 43 },
+                                { key: "Brunei", value: 43 },
+                                { key: "Bulgaria", value: 43 },
+                                { key: "Burkina Faso", value: 43 },
+                                { key: "Burma", value: 43 },
+                                { key: "Burundi", value: 43 },
+                                { key: "Cabo Verde", value: 43 },
+                                { key: "Cambodia", value: 43 },
+                                { key: "Cameroon", value: 43 },
+                                { key: "Central African Republic", value: 43 },
+                                { key: "Chad", value: 43 },
+                                { key: "Chile", value: 43 },
+                                { key: "Colombia", value: 43 },
+                                { key: "Congo (Brazzaville)", value: 43 },
+                                { key: "Congo (Kinshasa)", value: 43 },
+                                { key: "Costa Rica", value: 43 },
+                                { key: "Cote d\u0027Ivoire", value: 43 },
+                                { key: "Croatia", value: 43 },
+                                { key: "Cuba", value: 43 },
+                                { key: "Cyprus", value: 43 },
+                                { key: "Czechia", value: 43 },
+                                { key: "Diamond Princess", value: 43 },
+                                { key: "Djibouti", value: 43 },
+                                { key: "Dominica", value: 43 },
+                                { key: "Dominican Republic", value: 43 },
+                                { key: "Ecuador", value: 43 },
+                                { key: "Egypt", value: 43 },
+                                { key: "El Salvador", value: 43 },
+                                { key: "Equatorial Guinea", value: 43 },
+                                { key: "Eritrea", value: 43 },
+                                { key: "Estonia", value: 43 },
+                                { key: "Eswatini", value: 43 },
+                                { key: "Ethiopia", value: 43 },
+                                { key: "Fiji", value: 43 },
+                                { key: "Finland", value: 43 },
+                                { key: "Gabon", value: 43 },
+                                { key: "Gambia", value: 43 },
+                                { key: "Georgia", value: 43 },
+                                { key: "Germany", value: 43 },
+                                { key: "Ghana", value: 43 },
+                                { key: "Greece", value: 43 },
+                                { key: "Grenada", value: 43 },
+                                { key: "Guatemala", value: 43 },
+                                { key: "Guinea", value: 43 },
+                                { key: "Guinea-Bissau", value: 43 },
+                                { key: "Guyana", value: 43 },
+                                { key: "Haiti", value: 43 },
+                                { key: "Holy See", value: 43 },
+                                { key: "Honduras", value: 43 },
+                                { key: "Hungary", value: 43 },
+                                { key: "Iceland", value: 43 },
+                                { key: "India", value: 43 },
+                                { key: "Indonesia", value: 43 },
+                                { key: "Iran", value: 43 },
+                                { key: "Iraq", value: 43 },
+                                { key: "Ireland", value: 43 },
+                                { key: "Israel", value: 43 },
+                                { key: "Italy", value: 43 },
+                                { key: "Jamaica", value: 43 },
+                                { key: "Japan", value: 43 },
+                                { key: "Jordan", value: 43 },
+                                { key: "Kazakhstan", value: 43 },
+                                { key: "Kenya", value: 43 },
+                                { key: "Korea, South", value: 43 },
+                                { key: "Kosovo", value: 43 },
+                                { key: "Kuwait", value: 43 },
+                                { key: "Kyrgyzstan", value: 43 },
+                                { key: "Laos", value: 43 },
+                                { key: "Latvia", value: 43 },
+                                { key: "Lebanon", value: 43 },
+                                { key: "Liberia", value: 43 },
+                                { key: "Libya", value: 43 },
+                                { key: "Liechtenstein", value: 43 },
+                                { key: "Lithuania", value: 43 },
+                                { key: "Luxembourg", value: 43 },
+                                { key: "MS Zaandam", value: 43 },
+                                { key: "Madagascar", value: 43 },
+                                { key: "Malaysia", value: 43 },
+                                { key: "Maldives", value: 43 },
+                                { key: "Mali", value: 43 },
+                                { key: "Malta", value: 43 },
+                                { key: "Mauritania", value: 43 },
+                                { key: "Mauritius", value: 43 },
+                                { key: "Mexico", value: 43 },
+                                { key: "Moldova", value: 43 },
+                                { key: "Monaco", value: 43 },
+                                { key: "Mongolia", value: 43 },
+                                { key: "Montenegro", value: 43 },
+                                { key: "Morocco", value: 43 },
+                                { key: "Mozambique", value: 43 },
+                                { key: "Namibia", value: 43 },
+                                { key: "Nepal", value: 43 },
+                                { key: "New Zealand", value: 43 },
+                                { key: "Nicaragua", value: 43 },
+                                { key: "Niger", value: 43 },
+                                { key: "Nigeria", value: 43 },
+                                { key: "North Macedonia", value: 43 },
+                                { key: "Norway", value: 43 },
+                                { key: "Oman", value: 43 },
+                                { key: "Pakistan", value: 43 },
+                                { key: "Panama", value: 43 },
+                                { key: "Papua New Guinea", value: 43 },
+                                { key: "Paraguay", value: 43 },
+                                { key: "Peru", value: 43 },
+                                { key: "Philippines", value: 43 },
+                                { key: "Poland", value: 43 },
+                                { key: "Portugal", value: 43 },
+                                { key: "Qatar", value: 43 },
+                                { key: "Romania", value: 43 },
+                                { key: "Russia", value: 43 },
+                                { key: "Rwanda", value: 43 },
+                                { key: "Saint Kitts and Nevis", value: 43 },
+                                { key: "Saint Lucia", value: 43 },
+                                {
+                                  key: "Saint Vincent and the Grenadines",
+                                  value: 43,
+                                },
+                                { key: "San Marino", value: 43 },
+                                { key: "Saudi Arabia", value: 43 },
+                                { key: "Senegal", value: 43 },
+                                { key: "Serbia", value: 43 },
+                                { key: "Seychelles", value: 43 },
+                                { key: "Sierra Leone", value: 43 },
+                                { key: "Singapore", value: 43 },
+                                { key: "Slovakia", value: 43 },
+                                { key: "Slovenia", value: 43 },
+                                { key: "Somalia", value: 43 },
+                                { key: "South Africa", value: 43 },
+                                { key: "Spain", value: 43 },
+                                { key: "Sri Lanka", value: 43 },
+                                { key: "Sudan", value: 43 },
+                                { key: "Suriname", value: 43 },
+                                { key: "Sweden", value: 43 },
+                                { key: "Switzerland", value: 43 },
+                                { key: "Syria", value: 43 },
+                                { key: "Taiwan*", value: 43 },
+                                { key: "Tanzania", value: 43 },
+                                { key: "Thailand", value: 43 },
+                                { key: "Timor-Leste", value: 43 },
+                                { key: "Togo", value: 43 },
+                                { key: "Trinidad and Tobago", value: 43 },
+                                { key: "Tunisia", value: 43 },
+                                { key: "Turkey", value: 43 },
+                                { key: "Uganda", value: 43 },
+                                { key: "Ukraine", value: 43 },
+                                { key: "United Arab Emirates", value: 43 },
+                                { key: "Uruguay", value: 43 },
+                                { key: "Uzbekistan", value: 43 },
+                                { key: "Venezuela", value: 43 },
+                                { key: "Vietnam", value: 43 },
+                                { key: "West Bank and Gaza", value: 43 },
+                                { key: "Zambia", value: 43 },
+                                { key: "Zimbabwe", value: 43 },
+                              ],
+                              uniqueValueCount: 180,
+                              mostCommonValue: "US",
+                              mostCommonValueCount: 2322,
+                              column: {
+                                order: 2,
+                                originalType: null,
+                                type: "string",
+                                extendedType: "country",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/erslhI4S0kIpxh5PwFr8",
+                                firestoreKey: "erslhI4S0kIpxh5PwFr8",
+                                name: "Country_Region",
+                                description: null,
+                              },
+                              type: "string",
+                              extendedType: "country",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/erslhI4S0kIpxh5PwFr8",
+                          firestoreKey: "erslhI4S0kIpxh5PwFr8",
+                          name: "Country_Region",
+                          description: null,
+                        },
+                        {
+                          order: 3,
+                          originalType: "",
+                          type: "dateTime",
+                          extendedType: null,
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              mean: "2020-04-16T00:00:00.0005376Z",
+                              minimum: "2020-03-26T00:00:00Z",
+                              maximum: "2020-05-07T00:00:00Z",
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "03/26/2020 - 03/28/2020",
+                                    leftValue: "0001-01-01T00:00:00Z",
+                                    rightValue: "2020-03-28T02:24:00Z",
+                                    count: 918,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "03/28/2020 - 03/30/2020",
+                                    leftValue: "2020-03-28T02:24:00Z",
+                                    rightValue: "2020-03-30T04:48:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "03/30/2020 - 04/01/2020",
+                                    leftValue: "2020-03-30T04:48:00Z",
+                                    rightValue: "2020-04-01T07:12:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "04/01/2020 - 04/03/2020",
+                                    leftValue: "2020-04-01T07:12:00Z",
+                                    rightValue: "2020-04-03T09:36:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "04/03/2020 - 04/05/2020",
+                                    leftValue: "2020-04-03T09:36:00Z",
+                                    rightValue: "2020-04-05T12:00:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "04/05/2020 - 04/07/2020",
+                                    leftValue: "2020-04-05T12:00:00Z",
+                                    rightValue: "2020-04-07T14:24:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "04/07/2020 - 04/09/2020",
+                                    leftValue: "2020-04-07T14:24:00Z",
+                                    rightValue: "2020-04-09T16:48:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "04/09/2020 - 04/11/2020",
+                                    leftValue: "2020-04-09T16:48:00Z",
+                                    rightValue: "2020-04-11T19:12:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "04/11/2020 - 04/13/2020",
+                                    leftValue: "2020-04-11T19:12:00Z",
+                                    rightValue: "2020-04-13T21:36:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "04/13/2020 - 04/16/2020",
+                                    leftValue: "2020-04-13T21:36:00Z",
+                                    rightValue: "2020-04-16T00:00:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "04/16/2020 - 04/18/2020",
+                                    leftValue: "2020-04-16T00:00:00Z",
+                                    rightValue: "2020-04-18T02:24:00Z",
+                                    count: 918,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "04/18/2020 - 04/20/2020",
+                                    leftValue: "2020-04-18T02:24:00Z",
+                                    rightValue: "2020-04-20T04:48:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "04/20/2020 - 04/22/2020",
+                                    leftValue: "2020-04-20T04:48:00Z",
+                                    rightValue: "2020-04-22T07:12:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "04/22/2020 - 04/24/2020",
+                                    leftValue: "2020-04-22T07:12:00Z",
+                                    rightValue: "2020-04-24T09:36:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "04/24/2020 - 04/26/2020",
+                                    leftValue: "2020-04-24T09:36:00Z",
+                                    rightValue: "2020-04-26T12:00:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "04/26/2020 - 04/28/2020",
+                                    leftValue: "2020-04-26T12:00:00Z",
+                                    rightValue: "2020-04-28T14:24:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "04/28/2020 - 04/30/2020",
+                                    leftValue: "2020-04-28T14:24:00Z",
+                                    rightValue: "2020-04-30T16:48:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "04/30/2020 - 05/02/2020",
+                                    leftValue: "2020-04-30T16:48:00Z",
+                                    rightValue: "2020-05-02T19:12:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "05/02/2020 - 05/04/2020",
+                                    leftValue: "2020-05-02T19:12:00Z",
+                                    rightValue: "2020-05-04T21:36:00Z",
+                                    count: 612,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "05/04/2020 - 05/07/2020",
+                                    leftValue: "2020-05-04T21:36:00Z",
+                                    rightValue: "9999-12-31T23:59:59.9999999Z",
+                                    count: 918,
+                                  },
+                                ],
+                              },
+                              column: {
+                                order: 3,
+                                originalType: null,
+                                type: "dateTime",
+                                extendedType: null,
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/IdE5vJMFrdCUESEnTXY1",
+                                firestoreKey: "IdE5vJMFrdCUESEnTXY1",
+                                name: "Date",
+                                description: null,
+                              },
+                              type: "dateTime",
+                              extendedType: null,
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 13158,
+                              validCount: 13158,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv/columns/IdE5vJMFrdCUESEnTXY1",
+                          firestoreKey: "IdE5vJMFrdCUESEnTXY1",
+                          name: "Date",
+                          description: null,
+                        },
+                      ],
+                      totalRows: 13158,
+                      type: "genericTable",
+                      collapsed: true,
+                      info: null,
+                      settings: null,
+                      render: null,
+                      totalChildren: 0,
+                      children: [],
+                      firestorePath: null,
+                      firestoreKey: null,
+                      name: "",
+                      description: null,
+                    },
+                  ],
+                  firestorePath:
+                    "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/test.csv",
+                  firestoreKey: "test.csv",
+                  name: "test.csv",
+                  description: null,
+                },
+                {
+                  id: 0,
+                  blobFileId: 0,
+                  databundleVersionId: 1095900,
+                  databundleVersionObjectType: "file",
+                  url: null,
+                  relativePath: "train.csv",
+                  creationDate: null,
+                  isDummy: false,
+                  size: 906719,
+                  fullPath: "train.csv",
+                  previewUrl: null,
+                  downloadUrl:
+                    "/c/covid19-global-forecasting-week-3/download/XPSj1SmS6WvijX8UDb9m%2Fversions%2FMqNLyiIiWeuvrmbAH432%2Ffiles%2Ftrain.csv",
+                  fileType: ".csv",
+                  contentLength: 906719,
+                  contentType: "text/csv",
+                  contentMD5: "ZHaicaoBedCk6Et4ry57Mg==",
+                  validationErrors: null,
+                  type: "databundleVersionObject",
+                  collapsed: false,
+                  info: {
+                    metrics: null,
+                    archiveInfo: null,
+                    archiveInfoV2: null,
+                    blobFileInfo: null,
+                    convertCsvInfo: null,
+                    kernelReference: null,
+                  },
+                  settings: {
+                    csvSettings: null,
+                    bigQuerySettings: null,
+                    bigQueryMirrorSettings: null,
+                    storageSettings: null,
+                    remoteUrlSettings: null,
+                    remoteGithubSettings: null,
+                  },
+                  render: null,
+                  totalChildren: 6,
+                  children: [
+                    {
+                      columns: [
+                        {
+                          order: 0,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "id",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 23562,
+                              infiniteCount: 0,
+                              mean: 16356.5,
+                              standardDeviation: 9451.77691847764,
+                              minimum: 1.0,
+                              minimumFinite: 1.0,
+                              maximum: 32712.0,
+                              maximumFinite: 32712.0,
+                              quantiles: [
+                                { point: 0.25, value: 8171.0 },
+                                { point: 0.5, value: 16372.0 },
+                                { point: 0.75, value: 24542.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "1.00 - 1636.55",
+                                    leftValue: "-Infinity",
+                                    rightValue: 1636.55,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "1636.55 - 3272.10",
+                                    leftValue: 1636.55,
+                                    rightValue: 3272.1,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "3272.10 - 4907.65",
+                                    leftValue: 3272.1,
+                                    rightValue: 4907.65,
+                                    count: 1170,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "4907.65 - 6543.20",
+                                    leftValue: 4907.65,
+                                    rightValue: 6543.2,
+                                    count: 1171,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "6543.20 - 8178.75",
+                                    leftValue: 6543.2,
+                                    rightValue: 8178.75,
+                                    count: 1185,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "8178.75 - 9814.30",
+                                    leftValue: 8178.75,
+                                    rightValue: 9814.3,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "9814.30 - 11449.85",
+                                    leftValue: 9814.3,
+                                    rightValue: 11449.85,
+                                    count: 1155,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "11449.85 - 13085.40",
+                                    leftValue: 11449.85,
+                                    rightValue: 13085.4,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "13085.40 - 14720.95",
+                                    leftValue: 13085.4,
+                                    rightValue: 14720.949999999999,
+                                    count: 1185,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "14720.95 - 16356.50",
+                                    leftValue: 14720.949999999999,
+                                    rightValue: 16356.5,
+                                    count: 1171,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "16356.50 - 17992.05",
+                                    leftValue: 16356.5,
+                                    rightValue: 17992.05,
+                                    count: 1171,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "17992.05 - 19627.60",
+                                    leftValue: 17992.05,
+                                    rightValue: 19627.6,
+                                    count: 1185,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "19627.60 - 21263.15",
+                                    leftValue: 19627.6,
+                                    rightValue: 21263.149999999998,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "21263.15 - 22898.70",
+                                    leftValue: 21263.149999999998,
+                                    rightValue: 22898.7,
+                                    count: 1155,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "22898.70 - 24534.25",
+                                    leftValue: 22898.7,
+                                    rightValue: 24534.25,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "24534.25 - 26169.80",
+                                    leftValue: 24534.25,
+                                    rightValue: 26169.8,
+                                    count: 1185,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "26169.80 - 27805.35",
+                                    leftValue: 26169.8,
+                                    rightValue: 27805.35,
+                                    count: 1171,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "27805.35 - 29440.90",
+                                    leftValue: 27805.35,
+                                    rightValue: 29440.899999999998,
+                                    count: 1170,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "29440.90 - 31076.45",
+                                    leftValue: 29440.899999999998,
+                                    rightValue: 31076.45,
+                                    count: 1186,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "31076.45 - 32712.00",
+                                    leftValue: 31076.45,
+                                    rightValue: "Infinity",
+                                    count: 1186,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 0,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "id",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/Mrr5yxgqB3xadVUeCVvC",
+                                firestoreKey: "Mrr5yxgqB3xadVUeCVvC",
+                                name: "Id",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "id",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 23562,
+                              validCount: 23562,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/Mrr5yxgqB3xadVUeCVvC",
+                          firestoreKey: "Mrr5yxgqB3xadVUeCVvC",
+                          name: "Id",
+                          description: null,
+                        },
+                        {
+                          order: 1,
+                          originalType: "",
+                          type: "string",
+                          extendedType: null,
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              counts: [
+                                {
+                                  key: "Australian Capital Territory",
+                                  value: 77,
+                                },
+                                { key: "New South Wales", value: 77 },
+                                { key: "Northern Territory", value: 77 },
+                                { key: "Queensland", value: 77 },
+                                { key: "South Australia", value: 77 },
+                              ],
+                              uniqueValueCount: 130,
+                              mostCommonValue: "Australian Capital Territory",
+                              mostCommonValueCount: 77,
+                              column: {
+                                order: 1,
+                                originalType: null,
+                                type: "string",
+                                extendedType: null,
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/rdviODVBq57VBWrYjTdq",
+                                firestoreKey: "rdviODVBq57VBWrYjTdq",
+                                name: "Province_State",
+                                description: null,
+                              },
+                              type: "string",
+                              extendedType: null,
+                              exception: null,
+                              nullCount: 13552,
+                              nonNullCount: 10010,
+                              validCount: 10010,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/rdviODVBq57VBWrYjTdq",
+                          firestoreKey: "rdviODVBq57VBWrYjTdq",
+                          name: "Province_State",
+                          description: null,
+                        },
+                        {
+                          order: 2,
+                          originalType: "",
+                          type: "string",
+                          extendedType: "country",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              counts: [
+                                { key: "US", value: 4158 },
+                                { key: "China", value: 2541 },
+                                { key: "Canada", value: 924 },
+                                { key: "France", value: 770 },
+                                { key: "United Kingdom", value: 770 },
+                                { key: "Australia", value: 616 },
+                                { key: "Netherlands", value: 308 },
+                                { key: "Denmark", value: 231 },
+                                { key: "Afghanistan", value: 77 },
+                                { key: "Albania", value: 77 },
+                                { key: "Algeria", value: 77 },
+                                { key: "Andorra", value: 77 },
+                                { key: "Angola", value: 77 },
+                                { key: "Antigua and Barbuda", value: 77 },
+                                { key: "Argentina", value: 77 },
+                                { key: "Armenia", value: 77 },
+                                { key: "Austria", value: 77 },
+                                { key: "Azerbaijan", value: 77 },
+                                { key: "Bahamas", value: 77 },
+                                { key: "Bahrain", value: 77 },
+                                { key: "Bangladesh", value: 77 },
+                                { key: "Barbados", value: 77 },
+                                { key: "Belarus", value: 77 },
+                                { key: "Belgium", value: 77 },
+                                { key: "Belize", value: 77 },
+                                { key: "Benin", value: 77 },
+                                { key: "Bhutan", value: 77 },
+                                { key: "Bolivia", value: 77 },
+                                { key: "Bosnia and Herzegovina", value: 77 },
+                                { key: "Botswana", value: 77 },
+                                { key: "Brazil", value: 77 },
+                                { key: "Brunei", value: 77 },
+                                { key: "Bulgaria", value: 77 },
+                                { key: "Burkina Faso", value: 77 },
+                                { key: "Burma", value: 77 },
+                                { key: "Burundi", value: 77 },
+                                { key: "Cabo Verde", value: 77 },
+                                { key: "Cambodia", value: 77 },
+                                { key: "Cameroon", value: 77 },
+                                { key: "Central African Republic", value: 77 },
+                                { key: "Chad", value: 77 },
+                                { key: "Chile", value: 77 },
+                                { key: "Colombia", value: 77 },
+                                { key: "Congo (Brazzaville)", value: 77 },
+                                { key: "Congo (Kinshasa)", value: 77 },
+                                { key: "Costa Rica", value: 77 },
+                                { key: "Cote d\u0027Ivoire", value: 77 },
+                                { key: "Croatia", value: 77 },
+                                { key: "Cuba", value: 77 },
+                                { key: "Cyprus", value: 77 },
+                                { key: "Czechia", value: 77 },
+                                { key: "Diamond Princess", value: 77 },
+                                { key: "Djibouti", value: 77 },
+                                { key: "Dominica", value: 77 },
+                                { key: "Dominican Republic", value: 77 },
+                                { key: "Ecuador", value: 77 },
+                                { key: "Egypt", value: 77 },
+                                { key: "El Salvador", value: 77 },
+                                { key: "Equatorial Guinea", value: 77 },
+                                { key: "Eritrea", value: 77 },
+                                { key: "Estonia", value: 77 },
+                                { key: "Eswatini", value: 77 },
+                                { key: "Ethiopia", value: 77 },
+                                { key: "Fiji", value: 77 },
+                                { key: "Finland", value: 77 },
+                                { key: "Gabon", value: 77 },
+                                { key: "Gambia", value: 77 },
+                                { key: "Georgia", value: 77 },
+                                { key: "Germany", value: 77 },
+                                { key: "Ghana", value: 77 },
+                                { key: "Greece", value: 77 },
+                                { key: "Grenada", value: 77 },
+                                { key: "Guatemala", value: 77 },
+                                { key: "Guinea", value: 77 },
+                                { key: "Guinea-Bissau", value: 77 },
+                                { key: "Guyana", value: 77 },
+                                { key: "Haiti", value: 77 },
+                                { key: "Holy See", value: 77 },
+                                { key: "Honduras", value: 77 },
+                                { key: "Hungary", value: 77 },
+                                { key: "Iceland", value: 77 },
+                                { key: "India", value: 77 },
+                                { key: "Indonesia", value: 77 },
+                                { key: "Iran", value: 77 },
+                                { key: "Iraq", value: 77 },
+                                { key: "Ireland", value: 77 },
+                                { key: "Israel", value: 77 },
+                                { key: "Italy", value: 77 },
+                                { key: "Jamaica", value: 77 },
+                                { key: "Japan", value: 77 },
+                                { key: "Jordan", value: 77 },
+                                { key: "Kazakhstan", value: 77 },
+                                { key: "Kenya", value: 77 },
+                                { key: "Korea, South", value: 77 },
+                                { key: "Kosovo", value: 77 },
+                                { key: "Kuwait", value: 77 },
+                                { key: "Kyrgyzstan", value: 77 },
+                                { key: "Laos", value: 77 },
+                                { key: "Latvia", value: 77 },
+                                { key: "Lebanon", value: 77 },
+                                { key: "Liberia", value: 77 },
+                                { key: "Libya", value: 77 },
+                                { key: "Liechtenstein", value: 77 },
+                                { key: "Lithuania", value: 77 },
+                                { key: "Luxembourg", value: 77 },
+                                { key: "MS Zaandam", value: 77 },
+                                { key: "Madagascar", value: 77 },
+                                { key: "Malaysia", value: 77 },
+                                { key: "Maldives", value: 77 },
+                                { key: "Mali", value: 77 },
+                                { key: "Malta", value: 77 },
+                                { key: "Mauritania", value: 77 },
+                                { key: "Mauritius", value: 77 },
+                                { key: "Mexico", value: 77 },
+                                { key: "Moldova", value: 77 },
+                                { key: "Monaco", value: 77 },
+                                { key: "Mongolia", value: 77 },
+                                { key: "Montenegro", value: 77 },
+                                { key: "Morocco", value: 77 },
+                                { key: "Mozambique", value: 77 },
+                                { key: "Namibia", value: 77 },
+                                { key: "Nepal", value: 77 },
+                                { key: "New Zealand", value: 77 },
+                                { key: "Nicaragua", value: 77 },
+                                { key: "Niger", value: 77 },
+                                { key: "Nigeria", value: 77 },
+                                { key: "North Macedonia", value: 77 },
+                                { key: "Norway", value: 77 },
+                                { key: "Oman", value: 77 },
+                                { key: "Pakistan", value: 77 },
+                                { key: "Panama", value: 77 },
+                                { key: "Papua New Guinea", value: 77 },
+                                { key: "Paraguay", value: 77 },
+                                { key: "Peru", value: 77 },
+                                { key: "Philippines", value: 77 },
+                                { key: "Poland", value: 77 },
+                                { key: "Portugal", value: 77 },
+                                { key: "Qatar", value: 77 },
+                                { key: "Romania", value: 77 },
+                                { key: "Russia", value: 77 },
+                                { key: "Rwanda", value: 77 },
+                                { key: "Saint Kitts and Nevis", value: 77 },
+                                { key: "Saint Lucia", value: 77 },
+                                {
+                                  key: "Saint Vincent and the Grenadines",
+                                  value: 77,
+                                },
+                                { key: "San Marino", value: 77 },
+                                { key: "Saudi Arabia", value: 77 },
+                                { key: "Senegal", value: 77 },
+                                { key: "Serbia", value: 77 },
+                                { key: "Seychelles", value: 77 },
+                                { key: "Sierra Leone", value: 77 },
+                                { key: "Singapore", value: 77 },
+                                { key: "Slovakia", value: 77 },
+                                { key: "Slovenia", value: 77 },
+                                { key: "Somalia", value: 77 },
+                                { key: "South Africa", value: 77 },
+                                { key: "Spain", value: 77 },
+                                { key: "Sri Lanka", value: 77 },
+                                { key: "Sudan", value: 77 },
+                                { key: "Suriname", value: 77 },
+                                { key: "Sweden", value: 77 },
+                                { key: "Switzerland", value: 77 },
+                                { key: "Syria", value: 77 },
+                                { key: "Taiwan*", value: 77 },
+                                { key: "Tanzania", value: 77 },
+                                { key: "Thailand", value: 77 },
+                                { key: "Timor-Leste", value: 77 },
+                                { key: "Togo", value: 77 },
+                                { key: "Trinidad and Tobago", value: 77 },
+                                { key: "Tunisia", value: 77 },
+                                { key: "Turkey", value: 77 },
+                                { key: "Uganda", value: 77 },
+                                { key: "Ukraine", value: 77 },
+                                { key: "United Arab Emirates", value: 77 },
+                                { key: "Uruguay", value: 77 },
+                                { key: "Uzbekistan", value: 77 },
+                                { key: "Venezuela", value: 77 },
+                                { key: "Vietnam", value: 77 },
+                                { key: "West Bank and Gaza", value: 77 },
+                                { key: "Zambia", value: 77 },
+                                { key: "Zimbabwe", value: 77 },
+                              ],
+                              uniqueValueCount: 180,
+                              mostCommonValue: "US",
+                              mostCommonValueCount: 4158,
+                              column: {
+                                order: 2,
+                                originalType: null,
+                                type: "string",
+                                extendedType: "country",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/U5IaS3HMtYgO2wKZ2yMY",
+                                firestoreKey: "U5IaS3HMtYgO2wKZ2yMY",
+                                name: "Country_Region",
+                                description: null,
+                              },
+                              type: "string",
+                              extendedType: "country",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 23562,
+                              validCount: 23562,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/U5IaS3HMtYgO2wKZ2yMY",
+                          firestoreKey: "U5IaS3HMtYgO2wKZ2yMY",
+                          name: "Country_Region",
+                          description: null,
+                        },
+                        {
+                          order: 3,
+                          originalType: "",
+                          type: "dateTime",
+                          extendedType: null,
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              mean: "2020-02-29T00:00:00.0010496Z",
+                              minimum: "2020-01-22T00:00:00Z",
+                              maximum: "2020-04-07T00:00:00Z",
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "01/22/2020 - 01/25/2020",
+                                    leftValue: "0001-01-01T00:00:00Z",
+                                    rightValue: "2020-01-25T19:12:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "01/25/2020 - 01/29/2020",
+                                    leftValue: "2020-01-25T19:12:00Z",
+                                    rightValue: "2020-01-29T14:24:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "01/29/2020 - 02/02/2020",
+                                    leftValue: "2020-01-29T14:24:00Z",
+                                    rightValue: "2020-02-02T09:36:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "02/02/2020 - 02/06/2020",
+                                    leftValue: "2020-02-02T09:36:00Z",
+                                    rightValue: "2020-02-06T04:48:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "02/06/2020 - 02/10/2020",
+                                    leftValue: "2020-02-06T04:48:00Z",
+                                    rightValue: "2020-02-10T00:00:00Z",
+                                    count: 918,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "02/10/2020 - 02/13/2020",
+                                    leftValue: "2020-02-10T00:00:00Z",
+                                    rightValue: "2020-02-13T19:12:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "02/13/2020 - 02/17/2020",
+                                    leftValue: "2020-02-13T19:12:00Z",
+                                    rightValue: "2020-02-17T14:24:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "02/17/2020 - 02/21/2020",
+                                    leftValue: "2020-02-17T14:24:00Z",
+                                    rightValue: "2020-02-21T09:36:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "02/21/2020 - 02/25/2020",
+                                    leftValue: "2020-02-21T09:36:00Z",
+                                    rightValue: "2020-02-25T04:48:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "02/25/2020 - 02/29/2020",
+                                    leftValue: "2020-02-25T04:48:00Z",
+                                    rightValue: "2020-02-29T00:00:00Z",
+                                    count: 918,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "02/29/2020 - 03/03/2020",
+                                    leftValue: "2020-02-29T00:00:00Z",
+                                    rightValue: "2020-03-03T19:12:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "03/03/2020 - 03/07/2020",
+                                    leftValue: "2020-03-03T19:12:00Z",
+                                    rightValue: "2020-03-07T14:24:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "03/07/2020 - 03/11/2020",
+                                    leftValue: "2020-03-07T14:24:00Z",
+                                    rightValue: "2020-03-11T09:36:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "03/11/2020 - 03/15/2020",
+                                    leftValue: "2020-03-11T09:36:00Z",
+                                    rightValue: "2020-03-15T04:48:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "03/15/2020 - 03/19/2020",
+                                    leftValue: "2020-03-15T04:48:00Z",
+                                    rightValue: "2020-03-19T00:00:00Z",
+                                    count: 918,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "03/19/2020 - 03/22/2020",
+                                    leftValue: "2020-03-19T00:00:00Z",
+                                    rightValue: "2020-03-22T19:12:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "03/22/2020 - 03/26/2020",
+                                    leftValue: "2020-03-22T19:12:00Z",
+                                    rightValue: "2020-03-26T14:24:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "03/26/2020 - 03/30/2020",
+                                    leftValue: "2020-03-26T14:24:00Z",
+                                    rightValue: "2020-03-30T09:36:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "03/30/2020 - 04/03/2020",
+                                    leftValue: "2020-03-30T09:36:00Z",
+                                    rightValue: "2020-04-03T04:48:00Z",
+                                    count: 1224,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "04/03/2020 - 04/07/2020",
+                                    leftValue: "2020-04-03T04:48:00Z",
+                                    rightValue: "9999-12-31T23:59:59.9999999Z",
+                                    count: 1224,
+                                  },
+                                ],
+                              },
+                              column: {
+                                order: 3,
+                                originalType: null,
+                                type: "dateTime",
+                                extendedType: null,
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/9nzzS61XnXuhE3DCjFCN",
+                                firestoreKey: "9nzzS61XnXuhE3DCjFCN",
+                                name: "Date",
+                                description: null,
+                              },
+                              type: "dateTime",
+                              extendedType: null,
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 23562,
+                              validCount: 23562,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/9nzzS61XnXuhE3DCjFCN",
+                          firestoreKey: "9nzzS61XnXuhE3DCjFCN",
+                          name: "Date",
+                          description: null,
+                        },
+                        {
+                          order: 4,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "decimal",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 23562,
+                              infiniteCount: 0,
+                              mean: 801.3232747644512,
+                              standardDeviation: 6312.361931165423,
+                              minimum: 0.0,
+                              minimumFinite: 0.0,
+                              maximum: 141942.0,
+                              maximumFinite: 141942.0,
+                              quantiles: [
+                                { point: 0.25, value: 0.0 },
+                                { point: 0.5, value: 0.0 },
+                                { point: 0.75, value: 74.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "0.00 - 7097.10",
+                                    leftValue: "-Infinity",
+                                    rightValue: 7097.1,
+                                    count: 23140,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "7097.10 - 14194.20",
+                                    leftValue: 7097.1,
+                                    rightValue: 14194.2,
+                                    count: 172,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "14194.20 - 21291.30",
+                                    leftValue: 14194.2,
+                                    rightValue: 21291.300000000003,
+                                    count: 58,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "21291.30 - 28388.40",
+                                    leftValue: 21291.300000000003,
+                                    rightValue: 28388.4,
+                                    count: 24,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "28388.40 - 35485.50",
+                                    leftValue: 28388.4,
+                                    rightValue: 35485.5,
+                                    count: 21,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "35485.50 - 42582.60",
+                                    leftValue: 35485.5,
+                                    rightValue: 42582.600000000006,
+                                    count: 13,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "42582.60 - 49679.70",
+                                    leftValue: 42582.600000000006,
+                                    rightValue: 49679.700000000004,
+                                    count: 10,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "49679.70 - 56776.80",
+                                    leftValue: 49679.700000000004,
+                                    rightValue: 56776.8,
+                                    count: 11,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "56776.80 - 63873.90",
+                                    leftValue: 56776.8,
+                                    rightValue: 63873.9,
+                                    count: 16,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "63873.90 - 70971.00",
+                                    leftValue: 63873.9,
+                                    rightValue: 70971.0,
+                                    count: 52,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "70971.00 - 78068.10",
+                                    leftValue: 70971.0,
+                                    rightValue: 78068.1,
+                                    count: 5,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "78068.10 - 85165.20",
+                                    leftValue: 78068.1,
+                                    rightValue: 85165.20000000001,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "85165.20 - 92262.30",
+                                    leftValue: 85165.20000000001,
+                                    rightValue: 92262.3,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "92262.30 - 99359.40",
+                                    leftValue: 92262.3,
+                                    rightValue: 99359.40000000001,
+                                    count: 7,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "99359.40 - 106456.50",
+                                    leftValue: 99359.40000000001,
+                                    rightValue: 106456.5,
+                                    count: 6,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "106456.50 - 113553.60",
+                                    leftValue: 106456.5,
+                                    rightValue: 113553.6,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "113553.60 - 120650.70",
+                                    leftValue: 113553.6,
+                                    rightValue: 120650.70000000001,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "120650.70 - 127747.80",
+                                    leftValue: 120650.70000000001,
+                                    rightValue: 127747.8,
+                                    count: 3,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "127747.80 - 134844.90",
+                                    leftValue: 127747.8,
+                                    rightValue: 134844.9,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "134844.90 - 141942.00",
+                                    leftValue: 134844.9,
+                                    rightValue: "Infinity",
+                                    count: 4,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 4,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "decimal",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/6jFpsn3tYnOIM5KtFxaK",
+                                firestoreKey: "6jFpsn3tYnOIM5KtFxaK",
+                                name: "ConfirmedCases",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "decimal",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 23562,
+                              validCount: 23562,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/6jFpsn3tYnOIM5KtFxaK",
+                          firestoreKey: "6jFpsn3tYnOIM5KtFxaK",
+                          name: "ConfirmedCases",
+                          description: null,
+                        },
+                        {
+                          order: 5,
+                          originalType: "",
+                          type: "numeric",
+                          extendedType: "decimal",
+                          isNullable: null,
+                          isPrimaryKey: null,
+                          isLabel: null,
+                          info: {
+                            metrics: {
+                              finiteCount: 23562,
+                              infiniteCount: 0,
+                              mean: 37.46761734997029,
+                              standardDeviation: 468.6893905717525,
+                              minimum: 0.0,
+                              minimumFinite: 0.0,
+                              maximum: 17127.0,
+                              maximumFinite: 17127.0,
+                              quantiles: [
+                                { point: 0.25, value: 0.0 },
+                                { point: 0.5, value: 0.0 },
+                                { point: 0.75, value: 0.0 },
+                              ],
+                              histogram: {
+                                buckets: [
+                                  {
+                                    index: 0,
+                                    label: "0.00 - 856.35",
+                                    leftValue: "-Infinity",
+                                    rightValue: 856.35,
+                                    count: 23374,
+                                  },
+                                  {
+                                    index: 1,
+                                    label: "856.35 - 1712.70",
+                                    leftValue: 856.35,
+                                    rightValue: 1712.7,
+                                    count: 47,
+                                  },
+                                  {
+                                    index: 2,
+                                    label: "1712.70 - 2569.05",
+                                    leftValue: 1712.7,
+                                    rightValue: 2569.05,
+                                    count: 32,
+                                  },
+                                  {
+                                    index: 3,
+                                    label: "2569.05 - 3425.40",
+                                    leftValue: 2569.05,
+                                    rightValue: 3425.4,
+                                    count: 55,
+                                  },
+                                  {
+                                    index: 4,
+                                    label: "3425.40 - 4281.75",
+                                    leftValue: 3425.4,
+                                    rightValue: 4281.75,
+                                    count: 11,
+                                  },
+                                  {
+                                    index: 5,
+                                    label: "4281.75 - 5138.10",
+                                    leftValue: 4281.75,
+                                    rightValue: 5138.1,
+                                    count: 6,
+                                  },
+                                  {
+                                    index: 6,
+                                    label: "5138.10 - 5994.45",
+                                    leftValue: 5138.1,
+                                    rightValue: 5994.45,
+                                    count: 5,
+                                  },
+                                  {
+                                    index: 7,
+                                    label: "5994.45 - 6850.80",
+                                    leftValue: 5994.45,
+                                    rightValue: 6850.8,
+                                    count: 5,
+                                  },
+                                  {
+                                    index: 8,
+                                    label: "6850.80 - 7707.15",
+                                    leftValue: 6850.8,
+                                    rightValue: 7707.150000000001,
+                                    count: 2,
+                                  },
+                                  {
+                                    index: 9,
+                                    label: "7707.15 - 8563.50",
+                                    leftValue: 7707.150000000001,
+                                    rightValue: 8563.5,
+                                    count: 4,
+                                  },
+                                  {
+                                    index: 10,
+                                    label: "8563.50 - 9419.85",
+                                    leftValue: 8563.5,
+                                    rightValue: 9419.85,
+                                    count: 3,
+                                  },
+                                  {
+                                    index: 11,
+                                    label: "9419.85 - 10276.20",
+                                    leftValue: 9419.85,
+                                    rightValue: 10276.2,
+                                    count: 1,
+                                  },
+                                  {
+                                    index: 12,
+                                    label: "10276.20 - 11132.55",
+                                    leftValue: 10276.2,
+                                    rightValue: 11132.550000000001,
+                                    count: 3,
+                                  },
+                                  {
+                                    index: 13,
+                                    label: "11132.55 - 11988.90",
+                                    leftValue: 11132.550000000001,
+                                    rightValue: 11988.9,
+                                    count: 3,
+                                  },
+                                  {
+                                    index: 14,
+                                    label: "11988.90 - 12845.25",
+                                    leftValue: 11988.9,
+                                    rightValue: 12845.25,
+                                    count: 2,
+                                  },
+                                  {
+                                    index: 15,
+                                    label: "12845.25 - 13701.60",
+                                    leftValue: 12845.25,
+                                    rightValue: 13701.6,
+                                    count: 2,
+                                  },
+                                  {
+                                    index: 16,
+                                    label: "13701.60 - 14557.95",
+                                    leftValue: 13701.6,
+                                    rightValue: 14557.95,
+                                    count: 2,
+                                  },
+                                  {
+                                    index: 17,
+                                    label: "14557.95 - 15414.30",
+                                    leftValue: 14557.95,
+                                    rightValue: 15414.300000000001,
+                                    count: 2,
+                                  },
+                                  {
+                                    index: 18,
+                                    label: "15414.30 - 16270.65",
+                                    leftValue: 15414.300000000001,
+                                    rightValue: 16270.65,
+                                    count: 1,
+                                  },
+                                  {
+                                    index: 19,
+                                    label: "16270.65 - 17127.00",
+                                    leftValue: 16270.65,
+                                    rightValue: "Infinity",
+                                    count: 2,
+                                  },
+                                ],
+                                type: "string",
+                              },
+                              column: {
+                                order: 5,
+                                originalType: null,
+                                type: "numeric",
+                                extendedType: "decimal",
+                                isNullable: null,
+                                isPrimaryKey: null,
+                                isLabel: null,
+                                info: null,
+                                firestorePath:
+                                  "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/kmQpS0VxAuJXO6lEHMmP",
+                                firestoreKey: "kmQpS0VxAuJXO6lEHMmP",
+                                name: "Fatalities",
+                                description: null,
+                              },
+                              type: "numeric",
+                              extendedType: "decimal",
+                              exception: null,
+                              nullCount: 0,
+                              nonNullCount: 23562,
+                              validCount: 23562,
+                              invalidCount: 0,
+                            },
+                          },
+                          firestorePath:
+                            "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv/columns/kmQpS0VxAuJXO6lEHMmP",
+                          firestoreKey: "kmQpS0VxAuJXO6lEHMmP",
+                          name: "Fatalities",
+                          description: null,
+                        },
+                      ],
+                      totalRows: 23562,
+                      type: "genericTable",
+                      collapsed: true,
+                      info: null,
+                      settings: null,
+                      render: null,
+                      totalChildren: 0,
+                      children: [],
+                      firestorePath: null,
+                      firestoreKey: null,
+                      name: "",
+                      description: null,
+                    },
+                  ],
+                  firestorePath:
+                    "XPSj1SmS6WvijX8UDb9m/versions/MqNLyiIiWeuvrmbAH432/files/train.csv",
+                  firestoreKey: "train.csv",
+                  name: "train.csv",
+                  description: null,
+                },
+              ],
+              firestorePath: null,
+              firestoreKey: null,
+              name: "COVID19 Global Forecasting (Week 3)",
+              description:
+                "In this challenge, you will be predicting the *cumulative* number of confirmed COVID19 cases in various locations across the world, as well as the number of resulting fatalities, for _future_ dates.\n\n*We understand this is a serious situation, and in no way want to trivialize the human impact this crisis is causing by predicting fatalities. Our goal is to provide better methods for estimates that can assist medical and governmental institutions to prepare and adjust as pandemics unfold*.\n\n## Files\n - `train.csv` - the training data (you are encouraged to join in many more useful external datasets)\n - `test.csv` - the dates to predict; there is a week of overlap with the training data for the initial Public leaderboard. Once submissions are paused, the Public leaderboard will update based on last 28 days of predicted data.\n - `submission.csv` - a sample submission in the correct format; again, predictions should be *cumulative*\n\n## Data Source\n - This evaluation data for this competition comes from **[John Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)**, which is uninvolved in the competition. \n - See their [README](https://github.com/CSSEGISandData/COVID-19) for a description of how the data was collected.\n - They are currently updating the data daily.",
+            },
+            canSeePreviews: false,
+            canSeeDataExplorerV3: false,
+            databundleVersions: [],
+            discussionTeaser: [
+              {
+                title: "FORUM MIGRATED",
+                itemUrl:
+                  "/c/covid19-global-forecasting-week-1/discussion/142117",
+                totalVotes: 1,
+                totalReplies: 0,
+                date: "2020-04-09T01:19:05.29Z",
+                userDisplayName: "Addison Howard",
+                userUrl: "/addisonhoward",
+              },
+              {
+                title: "Community mobility Report",
+                itemUrl:
+                  "/c/covid19-global-forecasting-week-1/discussion/142575",
+                totalVotes: 0,
+                totalReplies: 0,
+                date: "2020-04-11T07:19:14.197Z",
+                userDisplayName: "Shivani Biradar",
+                userUrl: "/shivanibiradar",
+              },
+            ],
+            kernelTeaser: [
+              {
+                title: "SIR Model Explained without Calculus",
+                itemUrl:
+                  "/abhijithchandradas/sir-model-explained-without-calculus",
+                totalVotes: 2,
+                totalReplies: 0,
+                date: "2020-04-10T22:11:57.34Z",
+                userDisplayName: "Abhijith Chandra Das",
+                userUrl: "/abhijithchandradas",
+              },
+              {
+                title: "covid-19 in bangladesh",
+                itemUrl: "/mobassir/covid-19-in-bangladesh",
+                totalVotes: 3,
+                totalReplies: 0,
+                date: "2020-04-10T19:15:42.05Z",
+                userDisplayName: "Mobassir",
+                userUrl: "/mobassir",
+              },
+              {
+                title: "COVID19 Global Forecasting (Week 3) :GaussianNB",
+                itemUrl:
+                  "/khotijahs1/covid19-global-forecasting-week-3-gaussiannb",
+                totalVotes: 2,
+                totalReplies: 0,
+                date: "2020-04-11T02:49:41.38Z",
+                userDisplayName: "Siti k",
+                userUrl: "/khotijahs1",
+              },
+              {
+                title: "The Story of COVID-19 in India EDA and Prediction",
+                itemUrl:
+                  "/nitishabharathi/the-story-of-covid-19-in-india-eda-and-prediction",
+                totalVotes: 4,
+                totalReplies: 0,
+                date: "2020-04-11T09:07:20.527Z",
+                userDisplayName: "Nitisha",
+                userUrl: "/nitishabharathi",
+              },
+              {
+                title: "3 Regimes: Logistic, Exponential and Linear",
+                itemUrl:
+                  "/peteralaoui/3-regimes-logistic-exponential-and-linear",
+                totalVotes: 0,
+                totalReplies: 0,
+                date: "2020-04-11T00:51:09.823Z",
+                userDisplayName: "Pierre",
+                userUrl: "/peteralaoui",
+              },
+            ],
+            datasetVersions: [],
+            submissionsAreDisabled: false,
+            hasLeaderboard: true,
+            finalLeaderboardHasBeenVerified: false,
+            witholdFinalLeaderboardUntilItHasBeenVerified: false,
+            isPrivate: false,
+            publicLeaderboardMessage: null,
+            privateLeaderboardMessage: null,
+            disablePrizeIndicator: false,
+            hasKernels: true,
+            hasKernelsEnabled: true,
+            hasHostEnabled: false,
+            benchmarks: null,
+            totalSolutionColumns: 4,
+            hasSolutionFile: true,
+            hasSampleSubmissionFile: true,
+            userRankMultiplier: 0.5,
+            solutionUploadUrl: null,
+            submissionDetailsUpdateUrl: null,
+            submissionDeleteUrl: null,
+            benchmarkSubmitUrl: null,
+            needsPhoneVerification: true,
+            scoringIsMax: false,
+            rawDataUrl: "/c/19853/publicleaderboarddata.zip",
+            canSubmitModel: false,
+            privateLeaderboardIsPublic: true,
+            acceptModelUrl:
+              "/c/covid19-global-forecasting-week-3/team/model/upload.json",
+            modelFile: null,
+            newNotebookUrl:
+              "/kernels/notebooks/new?userName=taahakazi\u0026competitionId=19853",
+            finalSubmissionIds: [],
+            mySubmissionsCount: 0,
+            submissionsPage: 0,
+            submissionsSortBy: "date",
+            submissionsGroup: "all",
+            mostRecentSubmissionStatus: null,
+            isCompetitionHost: false,
+            allowAnonymousTeams: false,
+            allowTeamMergers: true,
+            hostSegments: [],
+            hostSegmentTitle: "Research",
+            canParticipate: true,
+            privacyOptions: [
+              { value: "public", label: "Public" },
+              { value: "limited", label: "Limited" },
+              { value: "private", label: "Private" },
+            ],
+            isCompetitionPending: false,
+            competitionHasLaunched: true,
+            competitionHasEnded: true,
+            canSeeNewWorldInClassCreation: true,
+            shareToken: null,
+            competitionPrivacy: "public",
+            ownerTwitter: "kaggle",
+            externalCompetitionThumbnailImageUrl:
+              "https://storage.googleapis.com/kaggle-competitions/kaggle/19853/logos/thumb76_76.png?t=2020-04-01-21-46-04",
+            competitionUrl: "/c/covid19-global-forecasting-week-3",
+            mergerDeadlineHasPassed: true,
+            categories: {
+              type: "competition",
+              tags: [
+                {
+                  displayName: "Coronavirus",
+                  fontAwesomeIcon: null,
+                  id: 16575,
+                  name: "covid19",
+                  fullPath:
+                    "natural and physical sciences \u003e biology \u003e health sciences \u003e diseases \u003e covid19",
+                  listingUrl:
+                    "/competitions?sortBy=relevance\u0026group=all\u0026search=tag%3A%27covid19%27",
+                  description:
+                    "COVID-19 is a strain of coronavirus that first broke out in Wuhan, China in December 2019 and has since become a global pandemic",
+                  isInherited: false,
+                  datasetCount: 325,
+                  competitionCount: 5,
+                  scriptCount: 491,
+                  totalCount: 821,
+                  tagUrl: "/tags/covid19",
+                },
+                {
+                  displayName: "time series",
+                  fontAwesomeIcon: null,
+                  id: 6618,
+                  name: "time series",
+                  fullPath:
+                    "mathematics and logic \u003e statistics \u003e time series",
+                  listingUrl:
+                    "/competitions?sortBy=relevance\u0026group=all\u0026search=tag%3A%27time series%27",
+                  description:
+                    "Time series analysis is the 4th dimension of data analysis. Our human minds can\u0027t visualize time but thankfully there are some really great plotting libraries out there to fix that problem.",
+                  isInherited: false,
+                  datasetCount: 254,
+                  competitionCount: 13,
+                  scriptCount: 525,
+                  totalCount: 792,
+                  tagUrl: "/tags/time-series",
+                },
+                {
+                  displayName: "tabular data",
+                  fontAwesomeIcon: null,
+                  id: 14101,
+                  name: "tabular data",
+                  fullPath: "data type \u003e tabular data",
+                  listingUrl:
+                    "/competitions?sortBy=relevance\u0026group=all\u0026search=tag%3A%27tabular data%27",
+                  description: null,
+                  isInherited: false,
+                  datasetCount: 173,
+                  competitionCount: 100,
+                  scriptCount: 126,
+                  totalCount: 399,
+                  tagUrl: "/tags/tabular-data",
+                },
+                {
+                  displayName: null,
+                  fontAwesomeIcon: null,
+                  id: 0,
+                  name: "mcrmsle",
+                  fullPath: null,
+                  listingUrl: null,
+                  description: "Average of the RMSLE of each column.",
+                  isInherited: true,
+                  datasetCount: 0,
+                  competitionCount: 0,
+                  scriptCount: 0,
+                  totalCount: 0,
+                  tagUrl: null,
+                },
+              ],
+            },
+            competitionHostClaims: {
+              readSettings: false,
+              writeSettings: false,
+              writeDescriptions: false,
+              writeDeadline: false,
+              readSubmissions: false,
+              writeSubmissions: false,
+              invalidateSubmissions: false,
+              rescoreSubmissions: false,
+              readEvaluation: false,
+              writeEvaluation: false,
+              writeTeamVisibility: false,
+              updateCategory: false,
+              launchCompetition: false,
+              writeBenchmarks: false,
+              writeTeamMergers: false,
+            },
+            newEntrantDeadlineHasPassed: false,
+            onlyAllowKernelSubmissions: true,
+            kernelFilters: null,
+            requiresSameRowCountInSubmissionAndSolution: true,
+            isOngoingCompetition: false,
+            canUpdateSelectedSubmissions: false,
+            enableLazyLeaderboard: false,
+            hideLeaderboardDelta: true,
+            rulesRequired: true,
+            usesSynchronousReruns: false,
+          });
+          performance &&
+            performance.mark &&
+            performance.mark("CompetitionContainer.componentCouldBootstrap");
+        </script>
+        <script nonce="kggibyII/Z4tDY0TuQyBvg==" type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+          "HTML-CSS": {
+          preferredFont: "TeX",
+          availableFonts: ["STIX", "TeX"],
+          linebreaks: {
+          automatic: true
+          },
+          EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+          },
+          tex2jax: {
+          inlineMath: [["\\(", "\\)"], ["\\\\(", "\\\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          processEscapes: true,
+          ignoreClass: "tex2jax_ignore|dno"
+          },
+          TeX: {
+          noUndefined: {
+          attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+          }
+          }
+          },
+          Macros: {
+          href: "{}"
+          },
+          skipStartupTypeset: false,
+          messageStyle: "none"
+          });
+        </script>
+        <script
+          nonce="kggibyII/Z4tDY0TuQyBvg=="
+          type="text/javascript"
+          async
+          crossorigin="anonymous"
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        ></script>
+      </div>
+
+      <!-- Cheers, web-6b664f7965-vmptdp. -->
+    </main>
+  </body>
+</html>
