@@ -1,0 +1,12 @@
+Flask
+pandas
+folium
+numpy
+matplotlib
+seaborn
+plotly
+cufflinks
+tqdm
+tensorflow
+scikit-learn
+dateutil
